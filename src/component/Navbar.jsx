@@ -1,14 +1,21 @@
 import React from 'react'
+import { RiExchangeLine } from 'react-icons/ri'
 
 const Navbar = () => {
     return (
-        <div className="flex ">
-            <div className='flex items-center justify-center'>
-                <div className='bg-green-300'>
-                    <button > New</button>
-                </div>
-            </div>
-        </div>
+        <header className="flex justify-between items-center p-6 shadow-xl
+         text-green-800 hover:text-lime-700 fixed top-0 left-0 right-0
+         cursor-pointer bg-red-50 ">
+            <a href='#' className='flex justify-start items-center text-2xl
+            '>
+                <span>Easy </span>
+                <RiExchangeLine />
+                <span> Asset</span>
+
+            </a>
+
+
+        </header>
     )
 }
 
