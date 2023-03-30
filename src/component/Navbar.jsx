@@ -11,9 +11,13 @@ const Navbar = () => {
                 <span>Easy </span>
                 <RiExchangeLine />
                 <span> Asset</span>
-
             </a>
-
+            <div className=' flex justify-center space bg-yellow-500 px-5 py-2
+            rounded-full text-white shadow-lg shadow-gray-500 hover:shadow-gray-900 
+            hover:bg-yellow-600'>
+                <button type='button'
+                    className='font-medium leading-tight uppercase '> Connect Wallet </button>
+            </div>
 
         </header>
     )
