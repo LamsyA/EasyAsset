@@ -5,7 +5,7 @@ const Navbar = () => {
     return (
         <header className="flex justify-between items-center p-6 shadow-md
          text-blue-300 hover:text-blue-400 fixed top-0 left-0 right-0
-         cursor-pointer bg-gray-700 shadow-blue-50  ">
+         cursor-pointer bg-gray-900 shadow-blue-50  ">
             <a href='#' className='flex justify-start items-center text-2xl
             '>
                 <span>Easy </span>

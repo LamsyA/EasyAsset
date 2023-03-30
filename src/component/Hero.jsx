@@ -26,14 +26,26 @@ const Hero = () => {
                     }}
                 />
             </h2>
-            <button className=' inline-block justify-center space bg-white px-5 py-2
+            <div className='flex justify-center'>
+                <button className=' inline-block mt-10 justify-center space bg-white px-5 py-2
             rounded-full text-blue-500 shadow-md shadow-gray-900 hover:shadow-blue-400 
             text-sm uppercase leading-tight border border-blue-500'>
-                Mint Asset
-            </button>
+                    Mint Asset
+                </button>
+            </div>
+            <div className='flex justify-center items-center mt-10'>
+                <div className='flex flex-col justify-center items-center bg-teal-50 
+                h-20 border  shadow-md  w-full'>
+                    <span className='text-blue-500 font-bold text-lg leading-5'> {0} </span>
+                    <span>Assets </span>
+                </div>
+                <div className='flex flex-col justify-center items-center bg-teal-50 
+                h-20 border border-white shadow-md  w-full'>
+                    <span className='text-blue-500 font-bold text-lg leading-5'> {0} </span>
+                    <span>Assets </span>
+                </div>
 
-
-
+            </div>
         </div>
     )
 }
