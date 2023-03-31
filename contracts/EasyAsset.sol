@@ -303,8 +303,8 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         return Newbuyer;
     }
 
-    function getBuyer(uint256 _id) public view returns (buyer memory) {
-        return Newbuyer[_id];
+    function getBuyer(uint256 buyerId) public view returns (buyer memory) {
+        return Newbuyer[buyerId];
     }
 
     function getAsset(uint256 _id) public view returns (Asset memory) {
