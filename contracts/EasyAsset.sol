@@ -7,7 +7,7 @@ import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
 // NFT marketplace contract
-contract Propertylet is ERC721, ReentrancyGuard {
+contract EasyAsset is ERC721, ReentrancyGuard {
     /*
     struct that holds the Asset owner details
     */
