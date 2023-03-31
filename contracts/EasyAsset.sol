@@ -11,8 +11,8 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     /*
     struct that holds the Asset owner details
     */
-    uint256 public assetCount;
-    uint256 public balanceFee;
+    uint256 assetCount;
+    uint256 balanceFee;
 
     struct Asset {
         address holder;
@@ -70,7 +70,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     uint256[] private TokenIdNumber;
     Asset[] assetArray;
 
-    mapping(uint256 => Asset) public Assets;
+    mapping(uint256 => Asset) Assets;
     //  event is that holds asset creation
     event assetCreation(
         address owner,
@@ -85,8 +85,8 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     // keep track of mintedCredential that exist
     mapping(string => bool) private mintedCredential;
     // keep track of asset that exist
-    mapping(string => bool) public AssetExist;
-    mapping(uint256 => bool) public AssetIdExist;
+    mapping(string => bool) AssetExist;
+    mapping(uint256 => bool) AssetIdExist;
 
     event assetTransfer(
         address from,
@@ -97,13 +97,16 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     );
 
     address public owner;
+
     // uint256 royalityFee;
 
     constructor(
         string memory _name,
-        string memory _symbol,
+        string memory _symbol
+    )
         // uint256 _royalityFee
-    ) ERC721(_name, _symbol) {
+        ERC721(_name, _symbol)
+    {
         // Set the owner
         owner = payable(msg.sender);
         // royalityFee = _royalityFee;
@@ -116,6 +119,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         );
         _;
     }
+
     // uint256 public cost = 0.001 ether;
 
     function createAsset(
@@ -272,7 +276,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         uint256 fund = assetArray[id].price;
         //  pay the asset owner
         pay(assetArray[id].holder, fund);
-        
+
         assetArray[id].price -= Newbuyer[id].amountpaid;
         assetArray[id].status = assetStatus.SOLD;
         // transfer ownership
@@ -295,7 +299,15 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         return assetArray;
     }
 
-    function getBuyer() public view returns (buyer[] memory) {
+    function getBuyers() public view returns (buyer[] memory) {
         return Newbuyer;
+    }
+
+    function getBuyer(uint256 _id) public view returns (buyer memory) {
+        return Newbuyer[_id];
+    }
+
+    function getAsset(uint256 _id) public view returns (Asset memory) {
+        return assetArray[_id];
     }
 }
