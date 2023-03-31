@@ -2,7 +2,7 @@ const {expect} = require('chai');
 const {ethers} = require('hardhat')
 
 describe('EasyAsset', () => {
-    let EasyAsset, contract,owner, holder
+    let EasyAsset, contract,owner, holder, addr1
 
     // parameters for creating an Asset
     const id = 0;
@@ -40,24 +40,28 @@ describe(" Asset Creation ", () => {
             // expect(result.status).to.equal(1)
         })
         it('should check the status of the Asset', async() => {
-            result = await contract.getAsset(id)
-            await contract.connect(holder).buyAsset(result.id, {
+            result = await contract.getAsset(0)
+            await contract.connect(holder).buyAsset(result.id, { 
                 value: price
               })
-            result = await contract.getAsset(id) 
+            result = await contract.getAsset(0) 
             
             expect(result.status).to.equal(1)
         })
-        it('should refund buyer', async() => {
+        it('should check for the confirmation of the Asset', async() => {
             result = await contract.getAsset(id)
-            await contract.connect(holder).refund(result.id, {
-                from:holder.address,
-            })
-            // result = await contract.getBuyer(id) 
-            
-            expect(result.status).to.equal(0)
-            
-            // expect(result.refunded).to.equal(true)
+            // console.log("Holder ",holder)
+            await contract.connect(holder).confirm(result.id)
+            result = await contract.getAsset(0) 
+            console.log("result", result)
+            expect(result.status).to.equal(1)
         })
+        it('should  refund buyer', async() => {
+           result = await contract.connect(holder).refund(id);
+            const buyer = await contract.connect(result.holder).getBuyer(result.id, result.holder.address);
+            expect(buyer.status).to.equal(0);
+            expect(buyer.refunded).to.equal(true);
+        })
+        
      })
 })
