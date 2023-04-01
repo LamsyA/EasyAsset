@@ -1,8 +1,8 @@
 import { FaEthereum } from 'react-icons/fa'
 const AssetDetails = () => {
     return (
-        <div className="py-24 px-5">
-            <div>
+        <div className="py-28 px-6 flex justify-center">
+            <div className='flex justify-center flex-col md:w-2/3'>
                 <div className="flex justify-start items-start sm:space-x-4
                 flex-wrap">
                     <img
@@ -40,8 +40,25 @@ const AssetDetails = () => {
                             <small className="flex justify-start items-center">{5} ETH </small>
                             <small className="flex justify-start items-center">
                                 <FaEthereum />
-                                <span> 0x29..092 is now the owner</span>
+                                <span> 0x29..092 Buyer</span>
                             </small>
+                        </div>
+                        <div className="flex justify-start items-center my-5  space-x-6">
+                            <button className=' inline-block justify-center space bg-green-500 px-5 py-2
+                                                 rounded-full text-white shadow-md shadow-gray-900 hover:shadow-green-800 
+                                                  text-sm uppercase leading-tight border border-white'>
+                                Buy Asset
+                            </button>
+                            <button className=' inline-block justify-center space bg-yellow-500 px-5 py-2
+                                                 rounded-full text-white shadow-md shadow-gray-900 hover:shadow-yellow-800 
+                                                  text-sm uppercase leading-tight border border-white'>
+                                Request Refund
+                            </button>
+                            <button className=' inline-block justify-center space bg-red-500 px-5 py-2
+                                                 rounded-full text-white shadow-md shadow-gray-900 hover:shadow-yellow-800 
+                                                  text-sm uppercase leading-tight border border-white'>
+                                Confirm Asset
+                            </button>
                         </div>
                     </div>
                 </div>
