@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "@openzeppelin/contracts": "^4.8.0",
+    "@polkadot/react-identicon": "^3.1.4",
     "@truffle/hdwallet-provider": "^2.1.5",
     "axios": "^1.2.1",
     "bootstrap": "^5.2.3",
