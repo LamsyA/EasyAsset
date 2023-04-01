@@ -6,17 +6,17 @@ const Assets = () => {
     return (
         <div className='flex flex-col px-6 bg-teal-50'>
             <div className='flex justify-center items-center flex-wrap'>
-                {Array(6).fill().map((card, i) => (
-                    <AssetCard key={i} />
+                {Array(4).fill().map((card, i) => (
+                    <AssetCard key={i} id={i} asset={card} />
                 ))}
             </div>
         </div>
     )
 }
 
-const AssetCard = ({ card, id }) => (
+const AssetCard = ({ asset, id }) => (
     <div id='assets' className='rounded-lg shadow-lg bg-white w-64 m-4'>
-        <Link to={'/projects/' + id}>
+        <Link to={'/assets/' + id}>
             <img
                 src='https://media.wired.com/photos/5926e641f3e2356fd800ad1d/master/w_2560%2Cc_limit/AnkiTA.jpg'
                 alt='Asset title'
