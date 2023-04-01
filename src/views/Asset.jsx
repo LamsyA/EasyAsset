@@ -1,10 +1,11 @@
+import AssetDetails from "../component/AssetDetails"
 
 
 const Asset = () => {
     return (
-        <div className='py-24 px-6'>
-            Asset
-        </div>
+        <>
+            <AssetDetails />
+        </>
     )
 }
 
