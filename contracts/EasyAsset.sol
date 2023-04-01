@@ -37,15 +37,9 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         string credential;
     }
 
-    event approval(
-        // uint sellingpoint,
-        // bool checkingStatus,
-        bool confirm,
-        assetStatus status
-        // assetStatus buyerStatus
-    );
+    event sold(bool confirm, assetStatus status);
 
-    event pendingAsset(
+    event Action(
         address buyer,
         address seller,
         uint256 timestamp,
@@ -58,9 +52,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         PENDING,
         REFUNDED,
         CHECKED,
-        CONFIRMED,
-        SOLD,
-        DELETED
+        SOLD
     }
 
     // Array to store new buyer
@@ -212,7 +204,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         //     true,
         //     false
         // ));
-        emit pendingAsset(
+        emit Action(
             msg.sender,
             assetArray[id].holder,
             block.timestamp,
@@ -292,7 +284,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
             block.timestamp
         );
 
-        emit approval(Newbuyer[id].checked, assetArray[id].status);
+        emit sold(Newbuyer[id].checked, assetArray[id].status);
     }
 
     function getAssets() public view returns (Asset[] memory) {
