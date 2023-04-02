@@ -1,5 +1,7 @@
 import Assets from "../component/Assets"
 import Hero from "../component/Hero"
+import MintAsset from "../component/MintAsset"
+
 
 const Home = () => {
     return (
@@ -13,6 +15,7 @@ const Home = () => {
                     Load More
                 </button>
             </div>
+            <MintAsset />
         </>
     )
 }
