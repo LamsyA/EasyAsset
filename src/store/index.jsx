@@ -1,11 +1,11 @@
-import {createGlobalState} from 'react-hooks-global-state'
+import { createGlobalState } from 'react-hooks-global-state'
 
 
-const {setGlobalState, useGlobalState, getGlobalState} = createGlobalState({
-    modal : 'scale-0'
+const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
+    modal: 'scale-0'
 })
 
-export{
+export {
     useGlobalState,
     setGlobalState,
     getGlobalState

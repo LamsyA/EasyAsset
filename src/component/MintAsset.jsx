@@ -32,7 +32,7 @@ const MintAsset = () => {
                         <label className='block'>
                             <span className='sr-only'>Choose Image item</span>
                             <input
-                                className='block w-full text-sm text-slate-300 file:mr-4
+                                className='block w-full text-sm text-slate-500 file:mr-4
                                   file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm
                                    hover:file:bg-[#c4e631] file:font-semibold focus:outline-none
                                    cursor-pointer focus:ring-0'
