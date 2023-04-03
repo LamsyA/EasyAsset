@@ -11,7 +11,7 @@ const MintAsset = () => {
             h-7/12 p-6 rounded-xl'>
                 <form className='flex flex-col'>
                     <div className='flex justify-between items-center'>
-                        <p className='font-semibold'>Asset Title</p>
+                        <p className='font-semibold'>Add Asset</p>
                         <button type='button'
                             className='border-0 bg-transparent 
                         focus:outline-none '>
@@ -27,7 +27,32 @@ const MintAsset = () => {
                             />
                         </div>
                     </div>
-                    <div className='flex justify-between items-center bg-gray-300 
+                    <div className='flex justify-between items-center bg-gray-300
+                                rounded-xl mt-5'>
+                        <label className='block'>
+                            <span className='sr-only'>Choose Image item</span>
+                            <input
+                                className='block w-full text-sm text-slate-300 file:mr-4
+                                  file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm
+                                   hover:file:bg-[#c4e631] file:font-semibold focus:outline-none
+                                   cursor-pointer focus:ring-0'
+                                type='file'
+                                accept='image/png, image/gif, image/webp, image/jpeg, image/jpg'
+                                //    onChange={changeImage}
+                                required />
+                        </label>
+                    </div>
+                    <div className='flex justify-between items-center bg-gray-300 p-2 
+                    rounded-xl mt-5'>
+                        <input className='block w-full bg-transparent border-0 text-sm
+                        text-slate-500 focus:outline-none focus:ring-0'
+                            type="text"
+                            name='title'
+                            placeholder='Name of Asset'
+                            required
+                        />
+                    </div>
+                    <div className='flex justify-between items-center bg-gray-300 p-2 
                     rounded-xl mt-5'>
                         <input className='block w-full bg-transparent border-0 text-sm
                         text-slate-500 focus:outline-none focus:ring-0'
@@ -38,6 +63,24 @@ const MintAsset = () => {
                             placeholder='Price (ETH)'
                         />
                     </div>
+                    <div className='flex justify-between items-center bg-gray-300
+                            rounded-xl mt-5'>
+                        <textarea
+                            className='block w-full text-sm text-slate-500 bg-gray-300
+                                focus:outline-none focus:ring-0 p-2
+                                 bg-transparent border-0 h-20 resize-none'
+                            type='text'
+                            placeholder='Description'
+                            name='description'
+                            //  onChange={(e) => setDescription(e.target.value)} 
+                            //  value={description}         
+                            required>
+                        </textarea>
+                    </div>
+                    <button className=" flex justify-center items-center
+                                shadow-lg shadow-black text-white bg-yellow-400
+                                hover:bg-yellow-600 rounded-full mt-5 p-2 uppercase "> Mint Asset
+                    </button>
                 </form>
             </div>
         </div>
