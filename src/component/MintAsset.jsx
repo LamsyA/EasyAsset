@@ -1,11 +1,13 @@
 import React from 'react'
 import { FaTimes } from 'react-icons/fa'
+import { useGlobalState, setGlobalState } from '../store'
 
 const MintAsset = () => {
+    const [showModal] = useGlobalState('showModal')
     return (
         <div className={`fixed top-0 left-0 w-screen h-screen flex
         items-center justify-center bg-black bg-opacity-50 transform 
-        transition-transform duration-300 scale-100`}>
+        transition-transform duration-300 ${showModal}`}>
 
             <div className='bg-white shadow-xl shadow-black w-11/12 md:w-2/5
             h-7/12 p-6 rounded-xl'>
@@ -13,6 +15,7 @@ const MintAsset = () => {
                     <div className='flex justify-between items-center'>
                         <p className='font-semibold'>Add Asset</p>
                         <button type='button'
+                            onClick={() => setGlobalState('showModal', 'scale-0')}
                             className='border-0 bg-transparent 
                         focus:outline-none '>
                             <FaTimes />
@@ -78,8 +81,8 @@ const MintAsset = () => {
                         </textarea>
                     </div>
                     <button className=" flex justify-center items-center
-                                shadow-lg shadow-black text-white bg-yellow-400
-                                hover:bg-yellow-600 rounded-full mt-5 p-2 uppercase "> Mint Asset
+                                shadow-lg shadow-black text-white bg-yellow-500
+                                hover:bg-yellow-800 rounded-full mt-5 p-2 uppercase "> Mint Asset
                     </button>
                 </form>
             </div>
