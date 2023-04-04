@@ -1,4 +1,5 @@
 import AssetDetails from "../component/AssetDetails"
+import BuyButton from "../component/BuyButton"
 import Buyer from "../component/Buyer"
 
 
@@ -7,6 +8,7 @@ const Asset = () => {
         <>
             <AssetDetails />
             <Buyer/>
+            <BuyButton />
         </>
     )
 }
