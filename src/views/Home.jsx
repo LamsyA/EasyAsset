@@ -1,5 +1,6 @@
 import Assets from "../component/Assets"
 import Hero from "../component/Hero"
+import HomeMintButton from "../component/HomeMintButton"
 import MintAsset from "../component/MintAsset"
 
 
@@ -16,6 +17,7 @@ const Home = () => {
                 </button>
             </div>
             <MintAsset />
+            <HomeMintButton />
         </>
     )
 }

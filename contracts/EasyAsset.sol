@@ -12,7 +12,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     struct that holds the Asset owner details
     */
     uint256 assetCount;
-    uint256 balanceFee;
+    // uint256 balanceFee;
 
     struct Asset {
         address holder;
@@ -22,6 +22,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         string credential;
         uint256 timestamp;
         uint256 price;
+        bool probe;
         assetStatus status;
     }
     address[] private assetOwner;
@@ -52,14 +53,15 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         PENDING,
         REFUNDED,
         CHECKED,
-        SOLD
+        SOLD,
+        HELD
     }
 
     // Array to store new buyer
     buyer[] Newbuyer;
 
     mapping(uint256 => buyer) buyerMap;
-    uint256[] private TokenIdNumber;
+    // uint256[] private TokenIdNumber;
     Asset[] assetArray;
 
     mapping(uint256 => Asset) Assets;
@@ -104,13 +106,13 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // royalityFee = _royalityFee;
     }
 
-    modifier ownerOnly() {
-        require(
-            msg.sender == owner,
-            "Only Owner has the authority, Process Reversed"
-        );
-        _;
-    }
+    // modifier ownerOnly() {
+    //     require(
+    //         msg.sender == owner,
+    //         "Only Owner has the authority, Process Reversed"
+    //     );
+    //     _;
+    // }
 
     // uint256 public cost = 0.001 ether;
 
@@ -130,7 +132,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
         //  initialize a counter;
         uint assetCounter = assetCount++;
-
+        // assetCounter++;
         // create a new Asset and set the details
         Asset storage asset = Assets[assetCounter];
 
@@ -146,7 +148,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
         assetArray.push(asset);
 
-        TokenIdNumber.push(assetCounter);
+        // TokenIdNumber.push(assetCounter);
 
         AssetExist[credential] = true;
 
@@ -220,7 +222,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         require(success, "Failed to send Ether");
     }
 
-    function refund(uint256 id) public returns (bool) {
+    function refund(uint256 id) public {
         require(
             assetArray[id].status == assetStatus.PENDING &&
                 msg.sender == Newbuyer[id].owner &&
@@ -230,7 +232,6 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         pay(Newbuyer[id].owner, assetArray[id].price);
         assetArray[id].status = assetStatus.OPEN;
         Newbuyer[id].refunded = true;
-        return true;
     }
 
     receive() external payable {}
@@ -238,6 +239,28 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     //check the balance of the contract.
     function balance() public view returns (uint256) {
         return address(this).balance;
+    }
+
+    function Probe(uint256 id) public {
+        require(
+            msg.sender == owner && !assetArray[id].probe,
+            "Only Owner has the authority to can probe Asset, Process Reversed"
+        );
+        assetArray[id].probe = true;
+
+        if (assetArray[id].status == assetStatus.PENDING) {
+            pay(Newbuyer[id].owner, assetArray[id].price);
+        }
+        assetArray[id].status = assetStatus.HELD;
+    }
+
+    function releaseAsset(uint256 id) public {
+        require(
+            msg.sender == owner && assetArray[id].status == assetStatus.HELD,
+            "only the owner can release Asset"
+        );
+        assetArray[id].probe = false;
+        assetArray[id].status = assetStatus.OPEN;
     }
 
     function confirm(uint256 id) public {
@@ -249,18 +272,16 @@ contract EasyAsset is ERC721, ReentrancyGuard {
             assetArray[id].status == assetStatus.PENDING,
             "Asset is undergoing Negotiation"
         );
-        //only the initial buyer and the owner can call this function
+
         // require(msg.sender ==  assetArray[id].holder || msg.sender ==  buyerof[id][id].owner , "Only the buyer and the owner can call this function");
+        //only the initial buyer and the owner can call this function
         require(
             msg.sender == Newbuyer[id].owner,
             "Only the buyer can call this function"
         );
         //this function can only be called once by the buyer of the asset and the asset owner;
         // require(assetArray[id].checked == false   || buyerof[id][id].checked == false  , "You cannot buy your Asset");
-        require(
-            Newbuyer[id].checked == false,
-            "You Have already Confirm the Assest"
-        );
+        require(!Newbuyer[id].checked, "You Have already Confirm the Assest");
 
         // change the checking status to true
         Newbuyer[id].checked = true;
