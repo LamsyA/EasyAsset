@@ -2,21 +2,24 @@ import React from 'react'
 import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState } from '../store'
 
-const BuyButton = () => {
-    const [buyModal] = useGlobalState('buyModal')
+const Refund = () => {
+    const [refundModal] = useGlobalState('refundModal')
+
+
+
     const imgSrc = "https://media.wired.com/photos/5926e641f3e2356fd800ad1d/master/w_2560%2Cc_limit/AnkiTA.jpg"
     return (
         <div className={`fixed top-0 left-0 w-screen h-screen flex
         items-center justify-center bg-black bg-opacity-50 transform 
-        transition-transform duration-300 ${buyModal}`}>
+        transition-transform duration-300 ${refundModal}`}>
 
             <div className='bg-white shadow-xl shadow-black w-11/12 md:w-2/5
             h-7/12 p-6 rounded-xl'>
                 <div className='flex flex-col'>
                     <div className='flex justify-between items-center'>
-                        <p className='font-semibold'>Buy Asset</p>
+                        <p className='font-semibold'>Title</p>
                         <button type='button'
-                            onClick={() => setGlobalState('buyModal', 'scale-0')}
+                            onClick={() => setGlobalState('refundModal', 'scale-0')}
                             className='border-0 bg-transparent 
                         focus:outline-none '>
                             <FaTimes />
@@ -32,8 +35,8 @@ const BuyButton = () => {
                         </div>
                     </div>
                     <div className='flex flex-col justify-start rounded-xl mt-5'>
-                        <h4 className='font-semibold text-gray-800'>Title</h4>
-                        <p className='text-gray-500 text-xs my-1 '>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        <h4 className='font-sm text-xs text-gray-800'> Description</h4>
+                        <p className='flex justify-center text-red-500 text-sm my-1 '>Are you sure you want a refund?
                          </p>
                         <div className='flex justify-between items-center mt-3 text-gray-600'>
                        <div className='flex justify-start items-center'>
@@ -45,13 +48,13 @@ const BuyButton = () => {
                        </div>
                             <div className='flex flex-col text-gray-700'>
                                 <small className='text-sm'>Asset Price</small>
-                                <p className='text-xs font-medium'>0.56 ETH</p>
+                                <p className='text-xs font-medium text-red-700'>0.56 ETH</p>
                             </div>
                         </div>
                     </div>
                     <button className=" flex justify-center items-center
-                                shadow-lg shadow-black text-white bg-green-500
-                                hover:bg-green-800 rounded-full mt-5 p-2 uppercase "> Buy Asset
+                                shadow-lg shadow-black text-white bg-yellow-500
+                                hover:bg-red-500 rounded-full mt-5 p-2 uppercase "> Buy Asset
                     </button>
                 </div>
             </div>
@@ -59,4 +62,4 @@ const BuyButton = () => {
     )
 }
 
-export default BuyButton
+export default Refund
