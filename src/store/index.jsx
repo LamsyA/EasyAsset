@@ -5,6 +5,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     showModal: 'scale-0',
     buyModal: 'scale-0',
     refundModal: 'scale-0',
+    confirmModal: 'scale-0',
     
 })
 

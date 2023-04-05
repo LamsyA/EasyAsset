@@ -60,7 +60,9 @@ const AssetDetails = () => {
                             </button>
                             <button className=' inline-block justify-center space bg-red-500 px-5 py-2
                                                  rounded-full text-white shadow-md shadow-gray-900 hover:shadow-yellow-800 
-                                                  text-sm uppercase leading-tight border border-white'>
+                                                  text-sm uppercase leading-tight border border-white'
+                                                  onClick={() => setGlobalState('confirmModal', 'scale-100')}
+                                                  >
                                 Confirm Asset
                             </button>
                         </div>
