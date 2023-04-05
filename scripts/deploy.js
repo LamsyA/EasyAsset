@@ -1,26 +1,36 @@
-// We require the Hardhat Runtime Environment explicitly here. This is optional
-// but useful for running the script in a standalone fashion through `node <script>`.
-//
-// You can also run a script with `npx hardhat run <script>`. If you do that, Hardhat
-// will compile your contracts, add the Hardhat Runtime Environment's members to the
-// global scope, and execute the script.
 const hre = require("hardhat");
 
 async function main() {
-  const currentTimestampInSeconds = Math.round(Date.now() / 1000);
-  const ONE_YEAR_IN_SECS = 365 * 24 * 60 * 60;
-  const unlockTime = currentTimestampInSeconds + ONE_YEAR_IN_SECS;
+  const EasyAsset = await hre.ethers.getContractFactory("EasyAsset");
+  const easyAsset = await EasyAsset.deploy("EassyAssetNFT", "EAT");
 
-  const lockedAmount = hre.ethers.utils.parseEther("1");
+  await easyAsset.deployed();
+  
+  const gasEstimateCreateAsset = await easyAsset.estimateGas.createAsset("HJs", "qiuq","oqp", ethers.utils.parseEther("1"));
+  // console.log("Gas estimate for createAsset:", gasEstimateCreateAsset.toString());
+  
+  // const gasEstimateGetAssets = await easyAsset.estimateGas.getAssets();
+  // console.log("Gas estimate for getAssets:", gasEstimateGetAssets.toString());
+  
+  // const gasEstimateGetBuyers = await easyAsset.estimateGas.getBuyers();
+  // console.log("Gas estimate for getBuyers:", gasEstimateGetBuyers.toString());
 
-  const Lock = await hre.ethers.getContractFactory("Lock");
-  const lock = await Lock.deploy(unlockTime, { value: lockedAmount });
+  // const gasEstimateBuyAsset = await easyAsset.estimateGas.buyAsset(0,{ value: ethers.utils.parseEther("1") });
+  // console.log("Gas estimate for buyAsset:", gasEstimateBuyAsset.toString());
 
-  await lock.deployed();
+  // const gasEstimateRefund = await easyAsset.estimateGas.refund(0);
+  // console.log("Gas estimate for refund:", gasEstimateRefund.toString());
 
-  console.log(
-    `Lock with 1 ETH and unlock timestamp ${unlockTime} deployed to ${lock.address}`
-  );
+  // const gasEstimateConfirm = await easyAsset.estimateGas.confirm(0);
+  // console.log("Gas estimate for confirm:", gasEstimateConfirm.toString());
+
+  // const gasEstimateProbe = await easyAsset.estimateGas.probe(0);
+  // console.log("Gas estimate for probe:", gasEstimateProbe.toString());
+
+  // const gasEstimateReleaseAsset = await easyAsset.estimateGas.releaseAsset(0);
+  // console.log("Gas estimate for releaseAsset:", gasEstimateReleaseAsset.toString());
+
+  console.log(`EasyAsset deployed to ${easyAsset.address}`);
 }
 
 // We recommend this pattern to be able to use async/await everywhere

@@ -2,13 +2,14 @@
   "name": "easyasset",
   "private": true,
   "version": "0.0.0",
-  "type": "module",
+  "type": "commonjs",
   "scripts": {
     "dev": "vite",
     "build": "vite build",
     "preview": "vite preview"
   },
   "dependencies": {
+    "@nomiclabs/hardhat-waffle": "^2.0.5",
     "@openzeppelin/contracts": "^4.8.0",
     "@polkadot/react-identicon": "^3.1.4",
     "@truffle/hdwallet-provider": "^2.1.5",
@@ -30,6 +31,7 @@
     "react-router-dom": "^6.4.5",
     "react-toastify": "^9.1.1",
     "recharts": "^2.2.0",
+    "solc": "^0.8.19",
     "styled-components": "^5.3.6",
     "truffle-hdwallet-provider": "^1.0.17",
     "typewriter-effect": "^2.19.0",

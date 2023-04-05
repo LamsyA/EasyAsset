@@ -25,7 +25,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         bool probe;
         assetStatus status;
     }
-    address[] private assetOwner;
+    // address[] private assetOwner;
 
     struct buyer {
         uint256 id;
@@ -121,9 +121,8 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         string memory description,
         string memory credential,
         uint256 price
-    ) public returns (Asset memory) {
+    ) public returns (bool) {
         // set all condition
-        // require(msg.value >= cost, "The cost is too low!");
         require(bytes(title).length > 0, "Title must be greater than 0");
         require(bytes(description).length > 0, "Description cannot be empty");
         require(bytes(credential).length > 0, "Image cannot be empty");
@@ -144,7 +143,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         asset.timestamp = block.timestamp;
         asset.price = price;
 
-        assetOwner.push(msg.sender);
+        // assetOwner.push(msg.sender);
 
         assetArray.push(asset);
 
@@ -163,7 +162,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         );
         _safeMint(msg.sender, assetCounter);
 
-        return asset;
+        return true;
     }
 
     function buyAsset(uint256 id) public payable nonReentrant {
@@ -215,6 +214,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         );
 
         assetArray[id].status = assetStatus.PENDING;
+        
     }
 
     function pay(address to, uint256 amount) internal {

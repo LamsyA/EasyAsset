@@ -1,6 +1,7 @@
 import AssetDetails from "../component/AssetDetails"
 import BuyButton from "../component/BuyButton"
 import Buyer from "../component/Buyer"
+import ConfirmButton from "../component/ConfirmButton"
 import Refund from "../component/Refund"
 
 
@@ -11,6 +12,8 @@ const Asset = () => {
             <Buyer/>
             <BuyButton />
             <Refund />
+            <ConfirmButton />
+
         </>
     )
 }
