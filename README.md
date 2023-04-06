@@ -13,7 +13,12 @@ Note: Only Legal Document of Asset are Minted and Transfer of ownership is done 
 that the Asset 
 
 
+to clone this project run 
+
+git clone https://github.com/LamsyA/EasyAsset 
+
 Try running some of the following tasks:
+ 
 
 ```shell
 npx hardhat help
