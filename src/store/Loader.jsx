@@ -2,7 +2,7 @@ import { FaRegTimesCircle } from 'react-icons/fa'
 import {BsCheck2Circle} from "react-icons/bs"
 import { useGlobalState } from './index'
 
-const Alert = () => {
+const Loader = () => {
   const [loading] = useGlobalState('loading')
   return (
     <div className={`fixed top-0 left-0 w-screen h-screen flex
@@ -24,4 +24,4 @@ const Alert = () => {
   )
 }
 
-export default Alert
+export default Loader

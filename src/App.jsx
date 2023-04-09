@@ -4,6 +4,7 @@ import Navbar from "./component/Navbar"
 import Home from "./views/Home"
 import Asset from "./views/Asset"
 import Alert from "./store/Alert"
+import Loader from "./store/Loader"
 
 
 function App() {
@@ -19,6 +20,7 @@ function App() {
 
       </Routes>
       <Alert/>
+      <Loader/>
     </div>
   )
 }
