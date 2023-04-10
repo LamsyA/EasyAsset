@@ -6,12 +6,12 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     buyModal: 'scale-0',
     refundModal: 'scale-0',
     confirmModal: 'scale-0',
-    loading: {show: false, msg: ''},
+    loading: {show: false, msg: 'minting is not'},
     
 })
 
 const setMsgLoading =(msg) => {
-    const loading = getGlobalState('loading',{show: false, msg: '' } )
+    const loading = getGlobalState('loading')
     setGlobalState('loading', {...loading, msg})
 }
 
