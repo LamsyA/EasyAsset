@@ -10,10 +10,14 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     
 })
 
-// const setMessage
+const setMsgLoading =(msg) => {
+    const loading = getGlobalState('loading')
+    setGlobalState('loading', {...loading, msg})
+}
 
 export {
     useGlobalState,
     setGlobalState,
-    getGlobalState
+    getGlobalState,
+    setMsgLoading
 }
