@@ -7,8 +7,18 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     refundModal: 'scale-0',
     confirmModal: 'scale-0',
     loading: {show: false, msg: ''},
+    alert: {show: false, msg: '', color: ''},
     
 })
+
+const setAlert = (msg, color = 'green') => {
+    setGlobalState('loading', {show: false, msg: ''})
+    setGlobalState('alert', {show: true, msg, color}) 
+    setTimeout(() =>{
+    setGlobalState('alert', {show: false, msg, color}) 
+
+    }, 6000)
+}
 
 const setMsgLoading =(msg) => {
     const loading = getGlobalState('loading')
@@ -19,5 +29,6 @@ export {
     useGlobalState,
     setGlobalState,
     getGlobalState,
-    setMsgLoading
+    setMsgLoading,
+    setAlert
 }
