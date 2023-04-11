@@ -21,8 +21,7 @@ const setAlert = (msg, color = 'green') => {
 }
 
 const setMsgLoading =(msg) => {
-    const loading = getGlobalState('loading')
-    setGlobalState('loading', {...loading, msg})
+    setGlobalState('loading', {show: true, msg})
 }
 
 export {

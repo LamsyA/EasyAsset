@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { FaTimes } from 'react-icons/fa'
-import { useGlobalState, setGlobalState } from '../store'
+import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
 import { Buffer } from 'buffer'
 import { create } from 'ipfs-http-client'
 
@@ -38,11 +38,11 @@ const MintAsset = () => {
 
         if(!title || !description || !price) return
         setGlobalState('showModal','scale-0' )
-        //  setLoadingMsg('Uploading Data to IPFS...')
+         setMsgLoading('Uploading Data to IPFS...')
     
         try{
             const created = await client.add(fileUrl)
-            // setLoadingMsg(`Adding ${name} in progress...`)
+            setMsgLoading(`Adding ${name} in progress...`)
             const metadataURI = `https://ipfs.io/ipfs/${created.path}`
             
             
@@ -58,7 +58,7 @@ const MintAsset = () => {
         closeToggle()
         } catch (error){
           console.log("Error Minting Asset: ", error)
-        //   setAlert(error.message, "red")
+          setAlert(error.message, "red")
         }
     
     }
