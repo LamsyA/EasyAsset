@@ -42,17 +42,17 @@ const MintAsset = () => {
     
         try{
             const created = await client.add(fileUrl)
-            setMsgLoading(`Adding ${name} in progress...`)
-            const metadataURI = `https://ipfs.io/ipfs/${created.path}`
+            setMsgLoading(`Adding ${title} in progress...`)
+            const credential = `https://ipfs.io/ipfs/${created.path}`
             
             
-            // const newData = { address,age,name, metadataURI}
+            const newData = { title,description, credential , price}
           
-            // const result = await addCan(newData)
-            // //  console.log(newData)
-            // if (result === true ) { 
-            // setAlert(`${name} Successfully Added...`)}
-            // else { setAlert("Error adding Candidate details", "red") }
+            const result = await addCan(newData)
+            //  console.log(newData)
+            if (result === true ) { 
+            setAlert(`${title} Successfully Added...`)}
+            else { setAlert("Error adding Candidate details", "red") }
          
         //   navigateTo('/CandidatePage')
         closeToggle()
