@@ -8,6 +8,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     confirmModal: 'scale-0',
     loading: {show: false, msg: ''},
     alert: {show: false, msg: '', color: ''},
+    connectedAccount: '',
     
 })
 
