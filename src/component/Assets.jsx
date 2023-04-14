@@ -23,21 +23,23 @@ const AssetCard = ({ asset }) => (
                 className='rounded-xl h-64 w-full object-cover'
             />
             <div className='p-4 '>
-                <h4 className='text-sm mb-2'> {asset.title}</h4>
-                <div className='flex flex-col'>
-                    <div className='flex justify-between items-center'>
-                        <small className='text-gray-700'>{asset.holder.slice(0,6) +"..."+ asset.holder.slice(-6) }</small>
+                <h4 className='text-sm mb-4'>Asset Title: {asset.title}</h4>
+                <div className='flex flex-row mb-2 justify-between items-center space-x-2'>
+                    <div className='flex '>
+                        <small className='text-gray-700'>{asset.holder.slice(0,5) +"..."+ asset.holder.slice(-5) }</small>
                     </div>
-                    <small className='text-gray-500'> </small>
+                    <small >Asset ID: {asset.id} </small>
                 </div>
                 <div className='w-full bg-gray-300'>
-                    <div className='bg-teal-600 text-ts font-medium p-0.5
+                    <div className='bg-teal-600 text-xs font-medium p-0.5
                 leading-none rounded-l-full h-1 text-teal-100 text-center'
-                        style={{ width: '50%' }}> </div>
+                        style={{ width: `${asset.status * 25}%` }}> </div>
                 </div>
                 <div className='flex justify-between items-center flex-wrap mt-4 
                 mb-2 text-gray-500 font-bold'>
-                    <small >ID: {asset.id} </small>
+                    
+                    <small className='text-gray-500 text-sm'> Created: {asset.timestamp}</small>
+
                     <div>
                         <small > Open</small>
                     </div>
