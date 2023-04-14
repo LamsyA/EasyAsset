@@ -74,12 +74,11 @@ const isWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask")
         const connectedAccount = getGlobalState("connectedAccount")
         const contract = await getContract() 
-        const assets = await contract.connect(connectedAccount).getAssets() 
-        setGlobalState('asset', restructuredAssets(assets))
-        // console.log( restructuredAssets(assets))
-      return true
+        const assets = await contract.getAssets() 
+        setGlobalState('assets', restructuredAssets(assets))
+        console.log( restructuredAssets(assets))
     } catch (error) {
-      reportError(error.message)
+      reportError(error)
     }
   }
   const listBuyers = async () => {

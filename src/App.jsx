@@ -6,7 +6,7 @@ import Asset from "./views/Asset"
 import Alert from "./store/Alert"
 import Loader from "./store/Loader"
 import { useEffect, useState } from "react"
-import { isWalletConnected, listAssets, listBuyers } from "./services/Blockchain"
+import { isWalletConnected, listAssets} from "./services/Blockchain"
 
 
 function App() {
@@ -19,7 +19,6 @@ function App() {
       setLoaded(true);
       const result = await isWalletConnected()
       await listAssets();
-      // await listBuyers()
   
   };
    loadData();

@@ -26,7 +26,7 @@ const AssetCard = ({ asset }) => (
                 <h4> {asset.title}</h4>
                 <div className='flex flex-col'>
                     <div className='flex justify-between items-center'>
-                        <small className='text-gray-700'>{asset.holder}</small>
+                        <small className='text-gray-700'>{asset.holder.slice(0,6) +"..."+ asset.holder.slice(-6) }</small>
                     </div>
                     <small className='text-gray-500'> </small>
                 </div>
