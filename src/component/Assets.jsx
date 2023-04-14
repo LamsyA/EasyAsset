@@ -22,8 +22,8 @@ const AssetCard = ({ asset }) => (
                 alt={asset.title}
                 className='rounded-xl h-64 w-full object-cover'
             />
-            <div className='p-4'>
-                <h4> {asset.title}</h4>
+            <div className='p-4 '>
+                <h4 className='text-sm mb-2'> {asset.title}</h4>
                 <div className='flex flex-col'>
                     <div className='flex justify-between items-center'>
                         <small className='text-gray-700'>{asset.holder.slice(0,6) +"..."+ asset.holder.slice(-6) }</small>
@@ -37,7 +37,7 @@ const AssetCard = ({ asset }) => (
                 </div>
                 <div className='flex justify-between items-center flex-wrap mt-4 
                 mb-2 text-gray-500 font-bold'>
-                    <small >{asset.id} {14} </small>
+                    <small >ID: {asset.id} </small>
                     <div>
                         <small > Open</small>
                     </div>
