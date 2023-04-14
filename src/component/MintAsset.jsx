@@ -3,6 +3,7 @@ import { FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
 import { Buffer } from 'buffer'
 import { create } from 'ipfs-http-client'
+import { addAsset } from '../services/Blockchain'
 
 
 const MintAsset = () => {
@@ -44,12 +45,12 @@ const MintAsset = () => {
             const created = await client.add(fileUrl)
             setMsgLoading(`Adding ${title} in progress...`)
             const credential = `https://ipfs.io/ipfs/${created.path}`
-            
+            console.log(" credential " ,credential)
             
             const newData = { title,description, credential , price}
           
-            const result = await addCan(newData)
-            //  console.log(newData)
+            const result = await addAsset(newData)
+             console.log(newData)
             if (result === true ) { 
             setAlert(`${title} Successfully Added...`)}
             else { setAlert("Error adding Candidate details", "red") }

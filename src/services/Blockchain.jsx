@@ -61,15 +61,62 @@ const isWalletConnected = async () => {
         const connectedAccount = getGlobalState("connectedAccount")
         const contract = await getContract()
         price = ethers.utils.parseEther(price)
-        const transaction = await contract.createAsset( title,description, credential , {
-            from: connectedAccount,
-            value: price._hex,
-          })
+        const transaction = await contract.createAsset( title,description, credential , price)
+        console.log("Created Asset:", transaction)
       return true
     } catch (error) {
       reportError(error)
     }
   }
+
+  const listAssets = async () => {
+    try {
+        if (!ethereum) return alert("Please install Metamask")
+        const connectedAccount = getGlobalState("connectedAccount")
+        const contract = await getContract() 
+        const assets = await contract.connect(connectedAccount).getAssets() 
+        setGlobalState('asset', restructuredAssets(assets))
+        // console.log( restructuredAssets(assets))
+      return true
+    } catch (error) {
+      reportError(error.message)
+    }
+  }
+  const listBuyers = async () => {
+    try {
+        if (!ethereum) return alert("Please install Metamask")
+        const contract = await getContract()
+        const result = await contract.getBuyers( )
+        console.log("list of Buyers:", result)
+      return true
+    } catch (error) {
+      reportError(error)
+    }
+  }
+
+  const restructuredAssets = (assets) =>
+  assets
+    .map((asset) => ({
+      id: asset.id.toNumber(),
+      price: parseInt(asset.price._hex) / 10 ** 18,
+      holder: asset.holder.toLowerCase(),
+      title: asset.title,
+      description: asset.description,
+    //   timestamp: new Date(asset.timestamp.toNumber()).getTime(),
+      timestamp: toDate(asset.timestamp.toNumber() * 1000),
+      credential: asset.credential,
+      status: asset.status,
+    }))
+    .reverse()
+
+const toDate = (timestamp) => {
+  const date = new Date(timestamp)
+  const dd = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
+  const mm =
+    date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
+  const yyyy = date.getFullYear()
+  return `${yyyy}-${mm}-${dd}`
+}
 
 const reportError = (error) => {
     console.log(error.message)
@@ -79,4 +126,7 @@ const reportError = (error) => {
 export {
     connectWallet,
     isWalletConnected,
+    addAsset,
+    listAssets,
+    listBuyers,
 }

@@ -9,4 +9,9 @@ module.exports = {
   mocha: {
     timeout: 40000,
   },
+  networks: {
+    hardhat: {
+      chainId: 1337 
+    }
+  }
 };

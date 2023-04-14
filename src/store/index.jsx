@@ -9,6 +9,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     loading: {show: false, msg: ''},
     alert: {show: false, msg: '', color: ''},
     connectedAccount: '',
+    assets : [],
     
 })
 
