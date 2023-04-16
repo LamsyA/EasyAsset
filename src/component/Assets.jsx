@@ -31,9 +31,9 @@ const AssetCard = ({ asset }) => (
                     </div>
                     <small >Asset ID: {asset.id} </small>
                 </div>
-                <div className='w-full bg-gray-300'>
+                <div className='w-full bg-gray-300 overflow-hidden'>
                     <div className='bg-teal-600 text-xs font-medium p-0.5
-                leading-none rounded-l-full h-1 text-teal-100 text-center'
+                leading-none rounded-l-full h-1 text-teal-100 text-center '
                         style={{ width: `${asset.status * 25}%` }}> </div>
                 </div>
                 <div className='flex justify-between items-center mt-2 mb-2'>
@@ -55,7 +55,26 @@ const AssetCard = ({ asset }) => (
                     <small className='text-gray-500 text-sm'> Price: {asset.price} ETH</small>
 
                     <div>
-                        <small > Open</small>
+                        {asset.status == 0 ? (
+                        <small className='text-green-500'> Open</small>
+                        ) : 
+                        asset.status == 1 ? (
+                        <small className='text-yellow-500'> Bought</small> 
+                        ) : 
+                        asset.status == 2 ? 
+                        (
+                        <small className='text-gray-500'> Reverted</small>
+                        )  : 
+                        asset.status == 3 ?
+                         (
+                         <small className='text-teal-500'> Checked</small> 
+                         ) :
+                         asset.status == 3 ?
+                         (
+                         <small className='text-blue-500'> sold</small> 
+                          ) : ( 
+                         <small className='text-red-500'> Held</small> 
+                        )}
                         
                     </div>
                 </div>
