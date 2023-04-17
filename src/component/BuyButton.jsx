@@ -3,6 +3,8 @@ import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState } from '../store'
 
 const BuyButton = () => {
+
+    
     const [buyModal] = useGlobalState('buyModal')
     const imgSrc = "https://media.wired.com/photos/5926e641f3e2356fd800ad1d/master/w_2560%2Cc_limit/AnkiTA.jpg"
     return (
