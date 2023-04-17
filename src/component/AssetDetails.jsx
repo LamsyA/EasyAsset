@@ -45,22 +45,22 @@ const AssetDetails = () => {
                             </small>
                         </div>
                         <div className="flex justify-start items-center my-5  space-x-6">
-                            <button className=' inline-block justify-center space bg-green-500 px-5 py-2
-                                                 rounded-full text-white shadow-md shadow-gray-900 hover:shadow-green-800 
-                                                  text-sm uppercase leading-tight border border-white'
+                            <button className='inline-block bg-lime-500 px-5 py-2 text-white
+                                  font-medium text-xs leading-tight uppercase rounded-full 
+                                   shadow-md hover:bg-lime-600 '
                                                   onClick={() => setGlobalState('buyModal', 'scale-100')}>
                                 Buy Asset
                             </button>
-                            <button className=' inline-block justify-center space bg-yellow-500 px-5 py-2
-                                                 rounded-full text-white shadow-md shadow-gray-900 hover:shadow-yellow-800 
-                                                  text-sm uppercase leading-tight border border-white'
+                            <button className='inline-block bg-yellow-500 px-5 py-2 text-white
+                                  font-medium text-xs leading-tight uppercase rounded-full 
+                                   shadow-md hover:bg-yellow-600 '
                                                   onClick={() => setGlobalState('refundModal', 'scale-100')}>
 
                                 Request Refund
                             </button>
-                            <button className=' inline-block justify-center space bg-red-500 px-5 py-2
-                                                 rounded-full text-white shadow-md shadow-gray-900 hover:shadow-yellow-800 
-                                                  text-sm uppercase leading-tight border border-white'
+                            <button className='inline-block bg-gray-500 px-5 py-2 text-white
+                                  font-medium text-xs leading-tight uppercase rounded-full 
+                                   shadow-md hover:bg-gray-600 '
                                                   onClick={() => setGlobalState('confirmModal', 'scale-100')}
                                                   >
                                 Confirm Asset
