@@ -3,6 +3,7 @@ import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState } from '../store'
 
 const BuyButton = () => {
+    const [buyers] = useGlobalState('buyers')
 
     
     const [buyModal] = useGlobalState('buyModal')

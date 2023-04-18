@@ -10,6 +10,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     alert: {show: false, msg: '', color: ''},
     connectedAccount: '',
     assets : [],
+    buyers : [],
     
 })
 
