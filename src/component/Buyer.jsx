@@ -1,7 +1,7 @@
 import React from 'react'
 import { FaEthereum } from 'react-icons/fa';
 
-const Buyer = () => {
+const Buyer = ({asset}) => {
     return (
         <div className='flex flex-col justify-center items-center px-6    '>
 

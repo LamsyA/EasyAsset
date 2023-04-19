@@ -15,7 +15,7 @@ const AssetDetails = ({asset}) => {
                     />
                     <div className="flex-1 sm:py-0 py-4">
                         <div className="flex flex-col justify-start flex-wrap ">
-                            <h5 className="text-gray-900 text-sm font-medium mb-2">{asset?.title}</h5>
+                            <h5 className="text-gray-900 text-sm font-medium mb-2"> Asset Name: {asset?.title}</h5>
                             <small className="text-gray-500 ">{asset?.price}</small>
                         </div>
                         <div className="flex justify-between items-center w-full pb-1">
@@ -28,11 +28,7 @@ const AssetDetails = ({asset}) => {
                             </div>
                         </div>
                         <p className="text-sm font-light">
-                            Lorem Ipsum is simply dummy text of the printing and typesetting industry.
-                            Lorem Ipsum has been the industry's standard dummy text ever since the 1500s,
-                            when an unknown printer took a galley of type and scrambled it to make a
-                            type specimen book. It has survived not only five centuries, but also the
-                            leap into electronic typesetting, remaining essentially unchanged.
+                            Description {asset?.description}
                         </p>
                         <div className='w-full bg-gray-300 mt-4'>
                             <div className='bg-teal-600 text-ts font-medium p-0.5
@@ -40,10 +36,10 @@ const AssetDetails = ({asset}) => {
                                 style={{ width: '50%' }}> </div>
                         </div>
                         <div className="flex justify-between items-center font-bold mt-2">
-                            <small className="flex justify-start items-center">{5} ETH </small>
+                            <small className="flex justify-start items-center">{asset?.price} ETH </small>
                             <small className="flex justify-start items-center">
                                 <FaEthereum />
-                                <span> 0x29..092 Buyer</span>
+                                <span> {asset?.holder.slice(0,5)}...{asset?.holder.slice(-5)}</span>
                             </small>
                         </div>
                         <div className="flex justify-start items-center my-5  space-x-6">
