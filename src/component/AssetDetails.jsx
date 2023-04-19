@@ -1,20 +1,22 @@
 import { FaEthereum } from 'react-icons/fa'
 import { setGlobalState } from '../store'
-const AssetDetails = () => {
+const AssetDetails = ({asset}) => {
+
+    console.log("asset", asset)
     return (
         <div className="py-28 px-6 flex justify-center">
             <div className='flex justify-center flex-col md:w-2/3'>
                 <div className="flex justify-start items-start sm:space-x-4
                 flex-wrap">
                     <img
-                        src='https://media.wired.com/photos/5926e641f3e2356fd800ad1d/master/w_2560%2Cc_limit/AnkiTA.jpg'
-                        alt='Asset title'
+                        src={asset?.credential || 'https://media.wired.com/photos/5926e641f3e2356fd800ad1d/master/w_2560%2Cc_limit/AnkiTA.jpg'}
+                        alt={asset?.title}
                         className='rounded-xl h-64 object-cover w-full sm:w-1/3 '
                     />
                     <div className="flex-1 sm:py-0 py-4">
                         <div className="flex flex-col justify-start flex-wrap ">
-                            <h5 className="text-gray-900 text-sm font-medium mb-2">Test running the card</h5>
-                            <small className="text-gray-500 ">2 days left</small>
+                            <h5 className="text-gray-900 text-sm font-medium mb-2">{asset?.title}</h5>
+                            <small className="text-gray-500 ">{asset?.price}</small>
                         </div>
                         <div className="flex justify-between items-center w-full pb-1">
                             <div className="flex justify-start space-x-2 ">
