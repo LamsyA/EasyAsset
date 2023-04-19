@@ -13,12 +13,13 @@ const Asset = () => {
 
     const { id } = useParams()
     const [asset] = useGlobalState('asset')
-    useEffect(async () => {
-        await listAsset(id)
-    }, [])
+    // useEffect(async () => {
+    //     await listAsset(id)
+    // }, [])
+    listAsset(id)
     return (
         <>
-            <AssetDetails  />
+            <AssetDetails asset={asset} />
             <Buyer/>
             <BuyButton  />
             <Refund />

@@ -17,8 +17,8 @@ function App() {
     const loadData = async () => {
       console.log('Blockchain loaded')
       setLoaded(true);
-      // await getContract()
       const result = await isWalletConnected()
+      await getContract()
       await listAssets();
   
   };

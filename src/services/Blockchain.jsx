@@ -133,7 +133,7 @@ const toDate = (timestamp) => {
 
 const reportError = (error) => {
     console.log(error.message)
-    throw new Error('No ethereum object found')
+    throw new Error( error.message)
 }
 
 export {
