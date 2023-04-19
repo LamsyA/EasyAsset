@@ -2,7 +2,7 @@ import React from 'react'
 import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState } from '../store'
 
-const BuyButton = () => {
+const BuyButton = ({asset}) => {
     const [buyers] = useGlobalState('buyers')
 
     
@@ -35,20 +35,20 @@ const BuyButton = () => {
                         </div>
                     </div>
                     <div className='flex flex-col justify-start rounded-xl mt-5'>
-                        <h4 className='font-semibold text-gray-800'>Title</h4>
-                        <p className='text-gray-500 text-xs my-1 '>Lorem Ipsum is simply dummy text of the printing and typesetting industry.
+                        <h4 className='font-semibold text-gray-800'>Asset Name: {asset?.title}</h4>
+                        <p className='text-gray-500 text-xs my-1 '>Asset Description: {asset?.description}
                          </p>
                         <div className='flex justify-between items-center mt-3 text-gray-600'>
                        <div className='flex justify-start items-center'>
                        <FaEthereum className='mr-3 h-5 w-5'  />
                        <div className='flex flex-col justify-center items-start'> 
-                            <small className='text-xs'>@owner</small>
-                            <small className=' text-xs text-pink-800'>0X31..0f42</small>
+                            <small className='text-xs'> @owner</small>
+                            <small className=' text-xs text-pink-800'>{asset?.holder.slice(0,5)}...{asset?.holder.slice(-5)}</small>
                         </div>
                        </div>
                             <div className='flex flex-col text-gray-700'>
                                 <small className='text-sm'>Asset Price</small>
-                                <p className='text-xs font-medium'>0.56 ETH</p>
+                                <p className='text-xs font-medium'>{asset?.price} ETH</p>
                             </div>
                         </div>
                     </div>

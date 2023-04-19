@@ -16,12 +16,13 @@ const Asset = () => {
     // useEffect(async () => {
     //     await listAsset(id)
     // }, [])
+
     listAsset(id)
     return (
         <>
             <AssetDetails asset={asset} />
-            <Buyer/>
-            <BuyButton  />
+            <Buyer />
+            <BuyButton  asset={asset}/>
             <Refund />
             <ConfirmButton />
 
