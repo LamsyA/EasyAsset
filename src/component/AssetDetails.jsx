@@ -2,7 +2,7 @@ import { FaEthereum } from 'react-icons/fa'
 import { setGlobalState } from '../store'
 const AssetDetails = ({asset}) => {
 
-    console.log("asset", asset)
+    // console.log("asset", asset)
     return (
         <div className="py-28 px-6 flex justify-center">
             <div className='flex justify-center flex-col md:w-2/3'>

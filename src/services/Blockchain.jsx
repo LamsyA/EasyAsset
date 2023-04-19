@@ -69,6 +69,24 @@ const isWalletConnected = async () => {
     }
   }
 
+  const buyNewAsset = async ({id, price}) => {
+    console.log("id " , id , price)
+
+        try {
+        if (!ethereum) return alert("Please install Metamask")
+        const connectedAccount = getGlobalState("connectedAccount")
+        price = ethers.utils.parseEther(price.toString())
+        const contract = await getContract()
+        console.log("Price ", price)
+        const transaction = await contract.buyAsset(id, {value:price})
+        
+        console.log("Created Asset:", transaction)
+      return true
+    } catch (error) {
+      reportError(error.message)
+    }
+  }
+
   const listAssets = async () => {
     try {
         if (!ethereum) return alert("Please install Metamask")
@@ -76,7 +94,7 @@ const isWalletConnected = async () => {
         const contract = await getContract() 
         const assets = await contract.getAssets() 
         setGlobalState('assets', restructuredAssets(assets))
-        console.log( restructuredAssets(asset))
+        // console.log( restructuredAssets(asset))
     } catch (error) {
       reportError(error)
     }
@@ -86,7 +104,7 @@ const isWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask")
         const contract = await getContract() 
         const asset = await contract.getAsset(id) 
-        console.log("asset", restructuredAssets([asset])[0])
+        // console.log("asset", restructuredAssets([asset])[0])
         // setGlobalState('asset', asset)
         setGlobalState('asset', restructuredAssets([asset])[0])
         // console.log("asset", asset)
@@ -119,8 +137,25 @@ const isWalletConnected = async () => {
       timestamp: toDate(asset.timestamp.toNumber() * 1000),
       credential: asset.credential,
       status: asset.status,
+      bought: asset.bought,
     }))
     .reverse()
+  
+    const restructuredBuyers = (buyers) =>
+    buyers
+      .map((buyer) => ({
+        id: buyer.id.toNumber(),
+        price: parseInt(buyer.price._hex) / 10 ** 18,
+        owner: buyer.owner.toLowerCase(),
+        title: buyer.title,
+        description: buyer.description,
+      //   timestamp: new Date(buyer.timestamp.toNumber()).getTime(),
+        timestamp: toDate(buyer.timestamp.toNumber() * 1000),
+        credential: buyer.credential,
+        status: buyer.status,
+      }))
+      .reverse()
+      
 
 const toDate = (timestamp) => {
   const date = new Date(timestamp)
@@ -144,4 +179,5 @@ export {
     listAssets,
     listBuyers,
     listAsset,
+    buyNewAsset,
 }

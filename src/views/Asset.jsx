@@ -1,4 +1,4 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import AssetDetails from "../component/AssetDetails"
 import BuyButton from "../component/BuyButton"
 import Buyer from "../component/Buyer"
@@ -13,11 +13,19 @@ const Asset = () => {
 
     const { id } = useParams()
     const [asset] = useGlobalState('asset')
-    // useEffect(async () => {
-    //     await listAsset(id)
-    // }, [])
 
-    listAsset(id)
+    const [loaded, setLoaded] = useState(false)
+    useEffect (  () => {
+        const loadData = async () => {
+          console.log('Blockchain loaded')
+          setLoaded(true);
+          const result = await  listAsset(id)     
+      };
+       loadData();
+        
+      },[])
+
+   
     return (
         <>
             <AssetDetails asset={asset} />
