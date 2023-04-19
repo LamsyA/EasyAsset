@@ -24,7 +24,7 @@ const AssetCard = ({ asset }) => (
                 className='rounded-xl h-64 w-full object-cover'
             />
             <div className='p-4 '>
-                <h4 className='text-sm mb-4 text-yellow-600'>Asset Title: {asset.title}</h4>
+                <h4 className='text-sm mb-4 text-yellow-600'>Asset Name: {asset.title}</h4>
                 <div className='flex flex-row mb-2 justify-between items-center space-x-2'>
                     <div className='flex '>
                         <small className='text-gray-700'>{asset.holder.slice(0,5) +"..."+ asset.holder.slice(-5) }</small>
