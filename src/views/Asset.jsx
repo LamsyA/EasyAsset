@@ -6,20 +6,22 @@ import ConfirmButton from "../component/ConfirmButton"
 import Refund from "../component/Refund"
 import { useGlobalState } from "../store"
 import { useParams } from "react-router-dom"
-import { listAsset } from "../services/Blockchain"
+import { listAsset, listBuyers } from "../services/Blockchain"
 
 
 const Asset = () => {
 
     const { id } = useParams()
     const [asset] = useGlobalState('asset')
+    const [buyers] = useGlobalState('buyers')
 
     const [loaded, setLoaded] = useState(false)
     useEffect (  () => {
         const loadData = async () => {
           console.log('Blockchain loaded')
           setLoaded(true);
-          const result = await  listAsset(id)     
+          const result = await  listAsset(id)  
+          await listBuyers(id)   
       };
        loadData();
         
@@ -28,7 +30,7 @@ const Asset = () => {
    
     return (
         <>
-            <AssetDetails asset={asset} />
+            <AssetDetails asset={asset} buyers={buyers}/>
             <Buyer />
             <BuyButton  asset={asset}/>
             <Refund />

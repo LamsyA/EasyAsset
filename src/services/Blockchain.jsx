@@ -94,7 +94,7 @@ const isWalletConnected = async () => {
         const contract = await getContract() 
         const assets = await contract.getAssets() 
         setGlobalState('assets', restructuredAssets(assets))
-        // console.log( restructuredAssets(asset))
+        console.log( restructuredAssets(assets))
     } catch (error) {
       reportError(error)
     }
@@ -112,13 +112,13 @@ const isWalletConnected = async () => {
       reportError(error.message)
     }
   }
-  const listBuyers = async () => {
+  const listBuyers = async (id) => {
     try {
         if (!ethereum) return alert("Please install Metamask")
         const contract = await getContract()
-        const buyers = await contract.getBuyers()
-        setGlobalState('assets', restructuredAssets(buyers))
-        console.log("list of Buyers:", buyers)
+        const buyers = await contract.getBuyer(id)
+        setGlobalState('buyers', restructuredBuyers([buyers])[0])
+        console.log("list of Buyers:", restructuredBuyers([buyers])[0])
       return true
     } catch (error) {
       reportError(error)
@@ -143,19 +143,18 @@ const isWalletConnected = async () => {
   
     const restructuredBuyers = (buyers) =>
     buyers
-      .map((buyer) => ({
-        id: buyer.id.toNumber(),
-        price: parseInt(buyer.price._hex) / 10 ** 18,
-        owner: buyer.owner.toLowerCase(),
-        title: buyer.title,
-        description: buyer.description,
-      //   timestamp: new Date(buyer.timestamp.toNumber()).getTime(),
-        timestamp: toDate(buyer.timestamp.toNumber() * 1000),
-        credential: buyer.credential,
-        status: buyer.status,
+      .map((buy) => ({
+        id: buy.id.toNumber(),
+        price: parseInt(buy.amountpaid._hex) / 10 ** 18,
+        owner: buy.owner.toLowerCase(),
+        timestamp: toDate(buy.timestamp.toNumber() * 1000),
+        credential: buy.credential,
+        refunded: buy.refunded,
+        paid: buy.paid,
+        checked: buy.checked,
       }))
       .reverse()
-      
+     
 
 const toDate = (timestamp) => {
   const date = new Date(timestamp)
