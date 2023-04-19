@@ -1,8 +1,10 @@
 import { FaEthereum } from 'react-icons/fa'
-import { setGlobalState } from '../store'
-const AssetDetails = ({asset}) => {
+import { setGlobalState, useGlobalState } from '../store'
+const AssetDetails = ({asset, buyers}) => {
 
     // console.log("asset", asset)
+
+  const [connectedAccount] =  useGlobalState('connectedAccount')
     return (
         <div className="py-28 px-6 flex justify-center">
             <div className='flex justify-center flex-col md:w-2/3'>
@@ -43,13 +45,17 @@ const AssetDetails = ({asset}) => {
                             </small>
                         </div>
                         <div className="flex justify-start items-center my-5  space-x-6">
-                            <button className='inline-block bg-lime-500 px-5 py-2 text-white
-                                  font-medium text-xs leading-tight uppercase rounded-full 
-                                   shadow-md hover:bg-lime-600 '
-                                                  onClick={() => setGlobalState('buyModal', 'scale-100')}>
-                                Buy Asset
-                            </button>
-                            <button className='inline-block bg-yellow-500 px-5 py-2 text-white
+                            { buyers?.paid && !buyers?.refunded ? null : (
+                                <button className='inline-block bg-lime-500 px-5 py-2 text-white
+                                font-medium text-xs leading-tight uppercase rounded-full 
+                                 shadow-md hover:bg-lime-600 '
+                                                onClick={() => setGlobalState('buyModal', 'scale-100')}>
+                              Buy Asset
+                          </button>
+                            )}
+                            {connectedAccount ==  buyers?.owner && !buyers?.refunded ? (
+                                <div className="flex justify-start items-center my-5  space-x-6"> 
+                                    <button className='inline-block bg-yellow-500 px-5 py-2 text-white
                                   font-medium text-xs leading-tight uppercase rounded-full 
                                    shadow-md hover:bg-yellow-600 '
                                                   onClick={() => setGlobalState('refundModal', 'scale-100')}>
@@ -63,6 +69,9 @@ const AssetDetails = ({asset}) => {
                                                   >
                                 Confirm Asset
                             </button>
+                                </div>
+                            ) : null}
+                            
                         </div>
                     </div>
                 </div>
