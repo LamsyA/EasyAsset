@@ -12,6 +12,8 @@ const Refund = ({buyers}) => {
         try {
             setMsgLoading("Wait while we refund you, in progress...");
             const id = buyers?.id
+            console.log("Buyers new", id)
+            console.log()
             const price = buyers?.amountpaid
           await refunAsset({id, price})
            .then((result) => {

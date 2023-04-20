@@ -11,6 +11,9 @@ module.exports = {
     timeout: 40000,
   },
   networks: {
+    localhost: {
+      chainId: 31337
+    }
     // mumbai: {
     //   url: API_URL,
     //   accounts: [`0x${PRIVATE_KEY}`]

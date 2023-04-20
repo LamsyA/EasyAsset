@@ -82,21 +82,22 @@ const AssetDetails = ({asset, buyers}) => {
                             </small>
                         </div>
                         <div className="flex justify-start items-center my-5  space-x-6">
-                            { buyers?.paid && !buyers?.refunded ?  <button className=' inline-block bg-blue-500 px-5 py-2 text-white
+                            { asset?.status == 0 ?  (<button className='inline-block bg-lime-500 px-5 py-2 text-white
                                 font-medium text-xs leading-tight uppercase rounded-full 
-                                 shadow-md hover:bg-blue-600 '
-                                                // onClick={() => setGlobalState('buyModal', 'scale-100')}
+                                 shadow-md hover:bg-lime-600 '
+                                                onClick={() => setGlobalState('buyModal', 'scale-100')}
                                                 >
-                              Asset undergoing Negotiation
-                          </button> : (
+                              Buy Asset
+                          </button>) : (
                                 <button className='inline-block bg-lime-500 px-5 py-2 text-white
                                 font-medium text-xs leading-tight uppercase rounded-full 
                                  shadow-md hover:bg-lime-600 '
-                                                onClick={() => setGlobalState('buyModal', 'scale-100')}>
-                              Buy Asset
+                                                >
+                              ASSET UNDER NEGOTIATION
                           </button>
                             )}
-                            {connectedAccount ==  buyers?.owner && !buyers?.refunded ? (
+                            {connectedAccount ==  buyers?.owner && asset?.status == 1 ? 
+                            (
                                 <div className="flex justify-start items-center my-5  space-x-6"> 
                                     <button className='inline-block bg-yellow-500 px-5 py-2 text-white
                                   font-medium text-xs leading-tight uppercase rounded-full 
@@ -113,7 +114,7 @@ const AssetDetails = ({asset, buyers}) => {
                                 Confirm Asset
                             </button>
                                 </div>
-                            ) : null}
+                            ) : null }
                             
                         </div>
                     </div>
