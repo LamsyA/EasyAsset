@@ -11,9 +11,9 @@ module.exports = {
     timeout: 40000,
   },
   networks: {
-    mumbai: {
-      url: API_URL,
-      accounts: [`0x${PRIVATE_KEY}`]
-    }
+    // mumbai: {
+    //   url: API_URL,
+    //   accounts: [`0x${PRIVATE_KEY}`]
+    // }
   }
 };

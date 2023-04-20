@@ -15,7 +15,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     // uint256 balanceFee;
 
     struct Asset {
-        address holder;
+        address seller;
         uint256 id;
         string title;
         string description;
@@ -38,6 +38,10 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         bool checked;
         string credential;
     }
+    event refundAction(
+        assetStatus,
+        bool
+    );
 
     // event sold(bool confirm, assetStatus status);
 
@@ -91,7 +95,6 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
     address public owner;
 
-    // uint256 royalityFee;
 
     constructor(
         string memory _name,
@@ -100,20 +103,10 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // uint256 _royalityFee
         ERC721(_name, _symbol)
     {
-        // Set the owner
         owner = payable(msg.sender);
-        // royalityFee = _royalityFee;
     }
 
-    // modifier ownerOnly() {
-    //     require(
-    //         msg.sender == owner,
-    //         "Only Owner has the authority, Process Reversed"
-    //     );
-    //     _;
-    // }
 
-    // uint256 public cost = 0.001 ether;
 
     function createAsset(
         string memory title,
@@ -134,7 +127,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // create a new Asset and set the details
         Asset storage asset = Assets[assetCounter];
 
-        asset.holder = msg.sender;
+        asset.seller = msg.sender;
         asset.id = assetCounter;
         asset.title = title;
         asset.description = description;
@@ -172,7 +165,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // require(msg.value > 0 ether, "value cannot be Zero");
 
         require(
-            msg.sender != assetArray[id].holder,
+            msg.sender != assetArray[id].seller,
             "You cannot buy your Asset"
         );
         require(AssetIdExist[id], "Asset does not Exist");
@@ -180,15 +173,15 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
         // create a new buyer and set the details
 
-        buyer storage buy = buyerMap[assetArray[id].id];
-        buy.id = assetArray[id].id;
+        buyer storage buy = buyerMap[id];
+        buy.id = id;
         buy.owner = msg.sender;
         buy.amountpaid = msg.value;
         buy.timestamp = block.timestamp;
-        buy.refunded = false;
+        // buy.refunded = false;
         // buy.buyingpoint = 1;
         buy.paid = true;
-        buy.checked = false;
+        // buy.checked = false;
 
         // buyerof[id].push(buy);
 
@@ -196,19 +189,9 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
        assetArray[id].bought = true;
 
-        // buyerof[id].push(buyer(
-        //     assetArray[id].id,
-        //     msg.sender,
-        //     msg.value,
-        //     block.timestamp,
-        //     false,
-        //     1,
-        //     true,
-        //     false
-        // ));
         emit Action(
             msg.sender,
-            assetArray[id].holder,
+            assetArray[id].seller,
             block.timestamp,
             msg.value,
             true
@@ -230,17 +213,18 @@ contract EasyAsset is ERC721, ReentrancyGuard {
                 !Newbuyer[id].refunded,
             "Only the buyer can call this function"
         );
-        pay(Newbuyer[id].owner, assetArray[id].price);
-        assetArray[id].status = assetStatus.OPEN;
-        Newbuyer[id].refunded = true;
-    }
+            pay(Newbuyer[id].owner, assetArray[id].price);
+            assetArray[id].status = assetStatus.OPEN;
+            Newbuyer[id].refunded = true;
+            emit refundAction( assetArray[id].status,Newbuyer[id].refunded  );
+        }
 
-    receive() external payable {}
+    // receive() external payable {}
 
     //check the balance of the contract.
-    function balance() public view returns (uint256) {
-        return address(this).balance;
-    }
+    // function balance() public view returns (uint256) {
+    //     return address(this).balance;
+    // }
 
     function Probe(uint256 id) public {
         require(
@@ -274,7 +258,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
             "Asset is undergoing Negotiation"
         );
 
-        // require(msg.sender ==  assetArray[id].holder || msg.sender ==  buyerof[id][id].owner , "Only the buyer and the owner can call this function");
+        // require(msg.sender ==  assetArray[id].seller || msg.sender ==  buyerof[id][id].owner , "Only the buyer and the owner can call this function");
         //only the initial buyer and the owner can call this function
         require(
             msg.sender == Newbuyer[id].owner,
@@ -287,19 +271,19 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // change the checking status to true
         Newbuyer[id].checked = true;
 
-        uint256 fund = assetArray[id].price;
+        // uint256 fund = assetArray[id].price;
         //  pay the asset owner
-        pay(assetArray[id].holder, fund);
+        pay(assetArray[id].seller, assetArray[id].price);
 
         assetArray[id].price -= Newbuyer[id].amountpaid;
         assetArray[id].status = assetStatus.SOLD;
         // transfer ownership
-        _transfer(assetArray[id].holder, msg.sender, assetArray[id].id);
+        _transfer(assetArray[id].seller, msg.sender, assetArray[id].id);
         Newbuyer[id].credential = assetArray[id].credential;
-        assetArray[id].holder = msg.sender;
+        assetArray[id].seller = msg.sender;
 
         emit assetTransfer(
-            assetArray[id].holder,
+            assetArray[id].seller,
             Newbuyer[id].owner,
             assetArray[id].id,
             Newbuyer[id].credential,

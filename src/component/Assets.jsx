@@ -27,7 +27,7 @@ const AssetCard = ({ asset }) => (
                 <h4 className='text-sm mb-4 text-yellow-600'>Asset Name: {asset.title}</h4>
                 <div className='flex flex-row mb-2 justify-between items-center space-x-2'>
                     <div className='flex '>
-                        <small className='text-gray-700'>{asset.holder.slice(0,5) +"..."+ asset.holder.slice(-5) }</small>
+                        <small className='text-gray-700'>{asset.seller.slice(0,5) +"..."+ asset.seller.slice(-5) }</small>
                     </div>
                     <small >Asset ID: {asset.id} </small>
                 </div>

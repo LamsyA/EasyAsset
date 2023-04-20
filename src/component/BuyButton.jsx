@@ -66,7 +66,7 @@ const BuyButton = ({asset}) => {
                        <FaEthereum className='mr-3 h-5 w-5'  />
                        <div className='flex flex-col justify-center items-start'> 
                             <small className='text-xs'> @owner</small>
-                            <small className=' text-xs text-pink-800'>{asset?.holder.slice(0,5)}...{asset?.holder.slice(-5)}</small>
+                            <small className=' text-xs text-pink-800'>{asset?.seller.slice(0,5)}...{asset?.seller.slice(-5)}</small>
                         </div>
                        </div>
                             <div className='flex flex-col text-gray-700'>
