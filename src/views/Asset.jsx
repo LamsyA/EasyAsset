@@ -21,7 +21,8 @@ const Asset = () => {
           console.log('Blockchain loaded')
           setLoaded(true);
           const result = await  listAsset(id)  
-          await listBuyers(id)   
+          await listBuyers(id)
+             
       };
        loadData();
         
@@ -31,9 +32,9 @@ const Asset = () => {
     return (
         <>
             <AssetDetails asset={asset} buyers={buyers}/>
-            <Buyer />
+            <Buyer buyers={buyers} />
             <BuyButton  asset={asset}/>
-            <Refund />
+            <Refund buyers={buyers}/>
             <ConfirmButton />
 
         </>

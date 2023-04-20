@@ -14,7 +14,7 @@ const BuyButton = ({asset}) => {
         setGlobalState("buyModal", 'scale-0')
        
         try {
-            // setMsgLoading("Buying in progress...");
+            setMsgLoading("Buying in progress...");
             const id = asset?.id
             const price = asset?.price
           await buyNewAsset({id, price})
@@ -22,7 +22,7 @@ const BuyButton = ({asset}) => {
             console.log("Success", result),
             setAlert(" Asset Bought successfully")
            }).catch((error) => {
-            setAlert(error.message, 'red')
+            setAlert(`${error.message}`, 'red')
            })
 
         } catch (error) {
