@@ -1,5 +1,6 @@
 import { FaEthereum } from 'react-icons/fa'
 import { setGlobalState, useGlobalState } from '../store'
+import { MdReport, MdVerified } from 'react-icons/md'
 const AssetDetails = ({asset, buyers}) => {
 
     // console.log("asset", asset)
@@ -18,15 +19,51 @@ const AssetDetails = ({asset, buyers}) => {
                     <div className="flex-1 sm:py-0 py-4">
                         <div className="flex flex-col justify-start flex-wrap ">
                             <h5 className="text-gray-900 text-sm font-medium mb-2"> Asset Name: {asset?.title}</h5>
-                            <small className="text-gray-500 ">{asset?.price}</small>
                         </div>
                         <div className="flex justify-between items-center w-full pb-1">
                             <div className="flex justify-start space-x-2 ">
-                                <small className="text-gray-700">0x63..90</small>
-                                <small className="text-gray-500 font-bold">{14} bidding</small>
+                            <small className='flex text-blue-600'>Created: {asset?.timestamp}</small> 
+                                <div className='flex justify-between items-center mt-2 mb-2'>
+                                
+                                    
+                    
+                                 </div>
                             </div>
                             <div className="font-bold flex ">
-                                <small className='text-gray-500'>Open</small>
+                            <div>
+                        {asset?.status == 0 ? (
+                        <small className='text-green-500'> Open</small>
+                        ) : 
+                        asset?.status == 1 ? (
+                        <small className='text-blue-500'> PENDING CONFIRMATION</small> 
+                        ) : 
+                        asset?.status == 2 ? 
+                        (
+                        <small className='text-gray-500'> Reverted</small>
+                        )  : 
+                        asset?.status == 3 ?
+                         (
+                         <small className='text-teal-500'> Checked</small> 
+                         ) :
+                         asset?.status == 3 ?
+                         (
+                         <small className='text-blue-500'> sold</small> 
+                          ) : ( 
+                         <small className='text-red-500'> Held</small> 
+                        )}
+
+                        <small className='flex text-yellow-700'>@owner {asset?.holder.slice(0,4)}...{asset?.holder.slice(-5)}</small> 
+                        {asset?.probe ? ( 
+                                        <small className='flex justify-start items-center'><span>Held </span>  
+                                    <MdReport className='text-red-500' size={20}/>
+                                    </small>
+                                    ): (
+                                        <small className='flex justify-start items-center'><span>Verified </span>  
+                                    <MdVerified className='text-green-500' size={20}/>
+                                    </small>
+                    )}
+                    </div>
+                    
                             </div>
                         </div>
                         <p className="text-sm font-light">
@@ -35,7 +72,7 @@ const AssetDetails = ({asset, buyers}) => {
                         <div className='w-full bg-gray-300 mt-4'>
                             <div className='bg-teal-600 text-ts font-medium p-0.5
                                 leading-none rounded-l-full h-1 text-teal-100 text-center'
-                                style={{ width: '50%' }}> </div>
+                                style={{ width: `${asset?.status * 25}%` }}> </div>
                         </div>
                         <div className="flex justify-between items-center font-bold mt-2">
                             <small className="flex justify-start items-center">{asset?.price} ETH </small>
@@ -45,7 +82,13 @@ const AssetDetails = ({asset, buyers}) => {
                             </small>
                         </div>
                         <div className="flex justify-start items-center my-5  space-x-6">
-                            { buyers?.paid && !buyers?.refunded ? null : (
+                            { buyers?.paid && !buyers?.refunded ?  <button className=' inline-block bg-blue-500 px-5 py-2 text-white
+                                font-medium text-xs leading-tight uppercase rounded-full 
+                                 shadow-md hover:bg-blue-600 '
+                                                // onClick={() => setGlobalState('buyModal', 'scale-100')}
+                                                >
+                              Asset undergoing Negotiation
+                          </button> : (
                                 <button className='inline-block bg-lime-500 px-5 py-2 text-white
                                 font-medium text-xs leading-tight uppercase rounded-full 
                                  shadow-md hover:bg-lime-600 '

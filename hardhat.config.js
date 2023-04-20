@@ -1,4 +1,5 @@
 require("@nomicfoundation/hardhat-toolbox");
+require("dotenv").config();
 
 /** @type import('hardhat/config').HardhatUserConfig */
 module.exports = {
@@ -10,8 +11,9 @@ module.exports = {
     timeout: 40000,
   },
   networks: {
-    hardhat: {
-      chainId: 1337 
+    mumbai: {
+      url: API_URL,
+      accounts: [`0x${PRIVATE_KEY}`]
     }
   }
 };

@@ -28,11 +28,19 @@ const setAlert = (msg, color = 'green') => {
 const setMsgLoading =(msg) => {
     setGlobalState('loading', {show: true, msg})
 }
+const shortenString = (str, firstLength, lastLength)  =>{
+    let firstChars = str.toString().substr(0, firstLength);
+    let lastChars = str.toString().substr(-lastLength);
+  
+    return firstChars + "..." + lastChars;
+  }
+  
 
 export {
     useGlobalState,
     setGlobalState,
     getGlobalState,
     setMsgLoading,
-    setAlert
+    setAlert,
+    shortenString
 }

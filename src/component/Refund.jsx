@@ -1,11 +1,32 @@
 import React from 'react'
 import {  FaEthereum, FaTimes } from 'react-icons/fa'
-import { useGlobalState, setGlobalState } from '../store'
+import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
+import { refunAsset } from '../services/Blockchain'
 
-const Refund = () => {
+const Refund = ({buyers}) => {
     const [refundModal] = useGlobalState('refundModal')
 
+    const handleRefund = async () => {
+        setGlobalState("buyModal", 'scale-0')
+       
+        try {
+            setMsgLoading("Wait while we refund you, in progress...");
+            const id = buyers?.id
+            const price = buyers?.amountpaid
+          await refunAsset({id, price})
+           .then((result) => {
+            console.log("Success", result),
+            setAlert(" Asset Bought successfully")
+           }).catch((error) => {
+            setAlert(`${error.message}`, 'red')
+           })
 
+        } catch (error) {
+            setAlert(`${error.message}`, 'red')
+            console.log(error.message)
+            
+        }
+    }
 
     const imgSrc = "https://media.wired.com/photos/5926e641f3e2356fd800ad1d/master/w_2560%2Cc_limit/AnkiTA.jpg"
     return (
@@ -54,7 +75,8 @@ const Refund = () => {
                     </div>
                     <button className=" flex justify-center items-center
                                 shadow-lg shadow-black text-white bg-yellow-500
-                                hover:bg-red-500 rounded-full mt-5 p-2 uppercase "> Refund Asset
+                                hover:bg-red-500 rounded-full mt-5 p-2 uppercase "
+                                onClick={handleRefund}> Refund Asset
                     </button>
                 </div>
             </div>

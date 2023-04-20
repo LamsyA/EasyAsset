@@ -125,6 +125,24 @@ const isWalletConnected = async () => {
     }
   }
 
+  const refunAsset = async ({id,price}) => {
+    console.log("id " , id , price)
+
+    try {
+    if (!ethereum) return alert("Please install Metamask")
+    const connectedAccount = getGlobalState("connectedAccount")
+    price = ethers.utils.parseEther(price.toString())
+    const contract = await getContract()
+    console.log("Price ", price)
+    const transaction = await contract.refund(id)
+    
+    console.log("Created Asset:", transaction)
+  return true
+} catch (error) {
+  reportError(error.message)
+}
+}
+
   const restructuredAssets = (assets) =>
   assets
     .map((asset) => ({
@@ -134,7 +152,7 @@ const isWalletConnected = async () => {
       title: asset.title,
       description: asset.description,
     //   timestamp: new Date(asset.timestamp.toNumber()).getTime(),
-      timestamp: toDate(asset.timestamp.toNumber() * 1000),
+      timestamp: getDateTimeFromTimestamp(asset.timestamp.toNumber() * 1000),
       credential: asset.credential,
       status: asset.status,
       bought: asset.bought,
@@ -145,9 +163,9 @@ const isWalletConnected = async () => {
     buyers
       .map((buy) => ({
         id: buy.id.toNumber(),
-        price: parseInt(buy.amountpaid._hex) / 10 ** 18,
+        amountpaid: parseInt(buy.amountpaid._hex) / 10 ** 18,
         owner: buy.owner.toLowerCase(),
-        timestamp: toDate(buy.timestamp.toNumber() * 1000),
+        timestamp: getDateTimeFromTimestamp(buy.timestamp.toNumber() * 1000),
         credential: buy.credential,
         refunded: buy.refunded,
         paid: buy.paid,
@@ -156,18 +174,32 @@ const isWalletConnected = async () => {
       .reverse()
      
 
-const toDate = (timestamp) => {
-  const date = new Date(timestamp)
-  const dd = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
-  const mm =
-    date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
-  const yyyy = date.getFullYear()
-  return `${yyyy}-${mm}-${dd}`
+// const toDate = (timestamp) => {
+//   const date = new Date(timestamp)
+//   const dd = date.getDate() > 9 ? date.getDate() : `0${date.getDate()}`
+//   const mm =
+//     date.getMonth() + 1 > 9 ? date.getMonth() + 1 : `0${date.getMonth() + 1}`
+//   const yyyy = date.getFullYear()
+//   return `${yyyy}-${mm}-${dd}`
+// }
+
+
+
+function getDateTimeFromTimestamp(timestamp) {
+  let date = new Date(timestamp);
+  let year = date.getFullYear();
+  let month = ("0" + (date.getMonth() + 1)).slice(-2);
+  let day = ("0" + date.getDate()).slice(-2);
+  let hours = ("0" + date.getHours()).slice(-2);
+  let minutes = ("0" + date.getMinutes()).slice(-2);
+  let seconds = ("0" + date.getSeconds()).slice(-2);
+
+  return year + "-" + month + "-" + day + " " + hours + ":" + minutes + ":" + seconds;
 }
 
 const reportError = (error) => {
     console.log(error.message)
-    throw new Error( error.message)
+    throw new Error( "Error", error)
 }
 
 export {
@@ -179,4 +211,5 @@ export {
     listBuyers,
     listAsset,
     buyNewAsset,
+    refunAsset,
 }
