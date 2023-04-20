@@ -52,7 +52,7 @@ const AssetDetails = ({asset, buyers}) => {
                          <small className='text-red-500'> Held</small> 
                         )}
 
-                        <small className='flex text-yellow-700'>@owner {asset?.holder.slice(0,4)}...{asset?.holder.slice(-5)}</small> 
+                        <small className='flex text-yellow-700'>@owner {asset?.seller.slice(0,4)}...{asset?.seller.slice(-5)}</small> 
                         {asset?.probe ? ( 
                                         <small className='flex justify-start items-center'><span>Held </span>  
                                     <MdReport className='text-red-500' size={20}/>
@@ -78,7 +78,7 @@ const AssetDetails = ({asset, buyers}) => {
                             <small className="flex justify-start items-center">{asset?.price} ETH </small>
                             <small className="flex justify-start items-center">
                                 <FaEthereum />
-                                <span> {asset?.holder.slice(0,5)}...{asset?.holder.slice(-5)}</span>
+                                <span> {asset?.seller.slice(0,5)}...{asset?.seller.slice(-5)}</span>
                             </small>
                         </div>
                         <div className="flex justify-start items-center my-5  space-x-6">
