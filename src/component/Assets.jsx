@@ -50,7 +50,7 @@ const AssetCard = ({ asset }) => (
                     
                 </div>
                 <div className='flex justify-between items-center flex-wrap mt-4 
-                mb-2 text-gray-500 font-bold'>
+                mb-2 text-gray-500 font-bold uppercase'>
                     
                     <small className='text-gray-500 text-sm'> Price: {asset.price} ETH</small>
 
@@ -69,9 +69,9 @@ const AssetCard = ({ asset }) => (
                          (
                          <small className='text-teal-500'> Checked</small> 
                          ) :
-                         asset.status == 3 ?
+                         asset.status == 4 ?
                          (
-                         <small className='text-blue-500'> sold</small> 
+                         <small className='text-teal-500'> Sold</small> 
                           ) : ( 
                          <small className='text-red-500'> Held</small> 
                         )}

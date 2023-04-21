@@ -89,6 +89,18 @@ const isWalletConnected = async () => {
     }
   }
 
+  const confirmAsset = async (id) => {
+    try {
+        if (!ethereum) return alert("Please install Metamask")
+        const contract = await getContract() 
+        const confirm = await contract.confirm(id) 
+        console.log("confirmation ", confirm)
+       
+    } catch (error) {
+      reportError(error.message)
+    }
+  }
+
   const listAssets = async () => {
     try {
         if (!ethereum) return alert("Please install Metamask")
@@ -169,7 +181,7 @@ const isWalletConnected = async () => {
         owner: buy.owner.toLowerCase(),
         timestamp: getDateTimeFromTimestamp(buy.timestamp.toNumber() * 1000),
         credential: buy.credential,
-        refunded: buy.refunded,
+        status: buy.status,
         paid: buy.paid,
         checked: buy.checked,
       }))
@@ -214,4 +226,5 @@ export {
     listAsset,
     buyNewAsset,
     refunAsset,
+    confirmAsset,
 }

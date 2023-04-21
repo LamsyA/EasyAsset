@@ -57,7 +57,7 @@ const Buyer = ({buyers}) => {
                             </td>
                             <td className='text-sm font-light px-6 
                             py-4 whitespace-nowrap'>
-                                {buyers?.refunded ? 'Yes' : 'No'}
+                                {buyers?.status == 3 ? 'Yes' : 'No'}
                             </td>
                             <td className='text-sm font-light px-6 
                             py-4 whitespace-nowrap'>
