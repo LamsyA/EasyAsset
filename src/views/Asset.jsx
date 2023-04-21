@@ -35,7 +35,7 @@ const Asset = () => {
             <Buyer buyers={buyers} />
             <BuyButton  asset={asset}/>
             <Refund buyers={buyers}/>
-            <ConfirmButton />
+            <ConfirmButton buyers={buyers} />
 
         </>
     )

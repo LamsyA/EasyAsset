@@ -7,7 +7,7 @@ const Refund = ({buyers}) => {
     const [refundModal] = useGlobalState('refundModal')
 
     const handleRefund = async () => {
-        setGlobalState("buyModal", 'scale-0')
+        setGlobalState("refundModal", 'scale-0')
        
         try {
             setMsgLoading("Wait while we refund you, in progress...");

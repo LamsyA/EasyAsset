@@ -33,14 +33,15 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         address owner;
         uint256 amountpaid;
         uint256 timestamp;
-        bool refunded;
         bool paid;
         bool checked;
         string credential;
+        assetStatus status;
+        
     }
     event refundAction(
         assetStatus,
-        bool
+        assetStatus
     );
 
     // event sold(bool confirm, assetStatus status);
@@ -56,8 +57,9 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     enum assetStatus {
         OPEN,
         PENDING,
-        SOLD,
-        HELD
+        HELD,
+        REFUNDED,
+        SOLD
     }
 
     // Array to store new buyer
@@ -181,6 +183,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // buy.refunded = false;
         // buy.buyingpoint = 1;
         buy.paid = true;
+        // buy.status = assetStatus.PENDING;
         // buy.checked = false;
 
         // buyerof[id].push(buy);
@@ -198,6 +201,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         );
 
         assetArray[id].status = assetStatus.PENDING;
+        Newbuyer[id].status = assetStatus.OPEN;
         
     }
 
@@ -207,16 +211,19 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     }
 
     function refund(uint256 id) public {
-        require(
-            assetArray[id].status == assetStatus.PENDING &&
-                msg.sender == Newbuyer[id].owner &&
-                !Newbuyer[id].refunded,
-            "Only the buyer can call this function"
+        // require(
+        //     assetArray[id].status == assetStatus.PENDING, "You have not buy the asset");
+            //  &&
+             require( msg.sender == Newbuyer[id].owner, "you are not the buyer");
+                //  &&
+             require( Newbuyer[id].status == assetStatus.OPEN,
+            "asset not opened for selling"
         );
             pay(Newbuyer[id].owner, assetArray[id].price);
             assetArray[id].status = assetStatus.OPEN;
-            Newbuyer[id].refunded = true;
-            emit refundAction( assetArray[id].status,Newbuyer[id].refunded  );
+            Newbuyer[id].status = assetStatus.REFUNDED;
+            // Newbuyer[id].refunded = true;
+            emit refundAction( assetArray[id].status,Newbuyer[id].status  );
         }
 
     // receive() external payable {}
@@ -250,7 +257,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
     function confirm(uint256 id) public {
         //check if asset exist
-        require(AssetIdExist[id], "Asset does not Exist");
+        // require(AssetIdExist[id], "Asset does not Exist");
         //check the status of the asset
         //the asset must be set to pending before approval
         require(
@@ -261,12 +268,12 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // require(msg.sender ==  assetArray[id].seller || msg.sender ==  buyerof[id][id].owner , "Only the buyer and the owner can call this function");
         //only the initial buyer and the owner can call this function
         require(
-            msg.sender == Newbuyer[id].owner,
+            msg.sender == Newbuyer[id].owner && !Newbuyer[id].checked,
             "Only the buyer can call this function"
         );
         //this function can only be called once by the buyer of the asset and the asset owner;
         // require(assetArray[id].checked == false   || buyerof[id][id].checked == false  , "You cannot buy your Asset");
-        require(!Newbuyer[id].checked, "You Have already Confirm the Assest");
+        // require(!Newbuyer[id].checked, "You Have already Confirm the Assest");
 
         // change the checking status to true
         Newbuyer[id].checked = true;

@@ -45,9 +45,9 @@ const AssetDetails = ({asset, buyers}) => {
                          (
                          <small className='text-teal-500'> Checked</small> 
                          ) :
-                         asset?.status == 3 ?
+                         asset?.status == 4 ?
                          (
-                         <small className='text-blue-500'> sold</small> 
+                         <small className='text-teal-500'> SOLD</small> 
                           ) : ( 
                          <small className='text-red-500'> Held</small> 
                         )}
@@ -88,14 +88,21 @@ const AssetDetails = ({asset, buyers}) => {
                                                 onClick={() => setGlobalState('buyModal', 'scale-100')}
                                                 >
                               Buy Asset
-                          </button>) : (
+                          </button>) : asset?.status == 4 ? (
+                                <button className='inline-block bg-teal-500 px-5 py-2 text-white
+                                font-medium text-xs leading-tight uppercase rounded-full 
+                                 shadow-md hover:bg-teal-600 '
+                                                >
+                              ASSET SOLD OUT
+                          </button>
+                            ):(
                                 <button className='inline-block bg-lime-500 px-5 py-2 text-white
                                 font-medium text-xs leading-tight uppercase rounded-full 
                                  shadow-md hover:bg-lime-600 '
                                                 >
                               ASSET UNDER NEGOTIATION
                           </button>
-                            )}
+                            ) }
                             {connectedAccount ==  buyers?.owner && asset?.status == 1 ? 
                             (
                                 <div className="flex justify-start items-center my-5  space-x-6"> 
