@@ -18,7 +18,7 @@ const Refund = ({asset, buyers}) => {
           await refunAsset({id, price})
            .then((result) => {
             console.log("Success", result),
-            setAlert(" Asset Bought successfully")
+            setAlert("You are successfully refunded...")
            }).catch((error) => {
             setAlert(`${error.message}`, 'red')
            })

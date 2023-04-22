@@ -22,7 +22,7 @@ const BuyButton = ({asset}) => {
             console.log("Success", result),
             setAlert(" Asset Bought successfully")
            }).catch((error) => {
-            setAlert(`${error.message}`, 'red')
+            setAlert(`Sorry you cannot buy this asset`, 'red')
            })
 
         } catch (error) {

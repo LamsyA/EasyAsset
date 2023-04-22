@@ -6,7 +6,8 @@ import ConfirmButton from "../component/ConfirmButton"
 import Refund from "../component/Refund"
 import { useGlobalState } from "../store"
 import { useParams } from "react-router-dom"
-import { listAsset, listBuyers } from "../services/Blockchain"
+import { listAsset, listBuyers, listRefund } from "../services/Blockchain"
+import RefundStatus from "../component/RefundStatus"
 
 
 const Asset = () => {
@@ -14,6 +15,7 @@ const Asset = () => {
     const { id } = useParams()
     const [asset] = useGlobalState('asset')
     const [buyers] = useGlobalState('buyers')
+    const [refund] = useGlobalState('refund')
 
     const [loaded, setLoaded] = useState(false)
     useEffect (  () => {
@@ -22,6 +24,7 @@ const Asset = () => {
           setLoaded(true);
           const result = await  listAsset(id)  
           await listBuyers(id)
+          await listRefund(id)
              
       };
        loadData();
@@ -36,6 +39,7 @@ const Asset = () => {
             <BuyButton  asset={asset}/>
             <Refund asset={asset} buyers={buyers}/>
             <ConfirmButton asset={asset} buyers={buyers} />
+            <RefundStatus buyers={buyers} refund={refund}  />
 
         </>
     )

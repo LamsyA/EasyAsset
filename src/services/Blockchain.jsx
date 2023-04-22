@@ -139,6 +139,20 @@ const isWalletConnected = async () => {
     }
   }
 
+  const listRefund = async (id) => {
+    try {
+        if (!ethereum) return alert("Please install Metamask")
+        const contract = await getContract() 
+        const refund = await contract.getRefundedBuyers(id) 
+        console.log("refund ", restructuredBuyers([refund])[0])
+        // setGlobalState('asset', asset)
+        setGlobalState('refund', restructuredBuyers([refund])[0])
+        // console.log("asset", asset)
+    } catch (error) {
+      reportError(error.message)
+    }
+  }
+
   const refunAsset = async ({id,price}) => {
     console.log("id " , id , price)
 
@@ -156,6 +170,9 @@ const isWalletConnected = async () => {
   reportError(error.message)
 }
 }
+
+
+
 
   const restructuredAssets = (assets) =>
   assets
@@ -227,4 +244,5 @@ export {
     buyNewAsset,
     refunAsset,
     confirmAsset,
+    listRefund
 }
