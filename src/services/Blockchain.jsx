@@ -171,6 +171,22 @@ const isWalletConnected = async () => {
 }
 }
 
+const getOwner = async () => {
+  // console.log("id " , id , price)
+
+  try {
+    if (!ethereum) return alert("Please install Metamask")
+    const contract = await getContract() 
+    const owner = await contract.owner() 
+    console.log("refund ", owner.toLowerCase())
+    // setGlobalState('asset', asset)
+    // setGlobalState('refund', restructuredBuyers([refund])[0])
+return true
+} catch (error) {
+reportError(error.message)
+}
+}
+
 
 
 
@@ -244,5 +260,6 @@ export {
     buyNewAsset,
     refunAsset,
     confirmAsset,
-    listRefund
+    listRefund,
+     getOwner
 }

@@ -16,6 +16,7 @@ const AssetDetails = ({asset, buyers}) => {
                         alt={asset?.title}
                         className='rounded-xl h-64 object-cover w-full sm:w-1/3 '
                     />
+                    
                     <div className="flex-1 sm:py-0 py-4">
                         <div className="flex flex-col justify-start flex-wrap ">
                             <h5 className="text-gray-900 text-sm font-medium mb-2"> Asset Name: {asset?.title}</h5>
@@ -32,18 +33,18 @@ const AssetDetails = ({asset, buyers}) => {
                             <div className="font-bold flex ">
                             <div>
                         {asset?.status == 0 ? (
-                        <small className='text-green-500'> Open</small>
+                        <small className='text-green-500'> OPEN</small>
                         ) : 
                         asset?.status == 1 ? (
                         <small className='text-blue-500'> PENDING CONFIRMATION</small> 
                         ) : 
                         asset?.status == 2 ? 
                         (
-                        <small className='text-gray-500'> Reverted</small>
+                        <small className='text-gray-500'> PROBE</small>
                         )  : 
                         asset?.status == 3 ?
                          (
-                         <small className='text-teal-500'> Checked</small> 
+                         <small className='text-teal-500'> REVERTED</small> 
                          ) :
                          asset?.status == 4 ?
                          (
@@ -63,13 +64,13 @@ const AssetDetails = ({asset, buyers}) => {
                                     </small>
                     )}
                     </div>
-                    
                             </div>
                         </div>
                         <p className="text-sm font-light">
                             Description {asset?.description}
                         </p>
                         <div className='w-full bg-gray-300 mt-4'>
+                            
                             <div className='bg-teal-600 text-ts font-medium p-0.5
                                 leading-none rounded-l-full h-1 text-teal-100 text-center'
                                 style={{ width: `${asset?.status * 25}%` }}> </div>

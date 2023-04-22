@@ -59,21 +59,21 @@ const AssetCard = ({ asset }) => (
                         <small className='text-green-500'> Open</small>
                         ) : 
                         asset.status == 1 ? (
-                        <small className='text-yellow-500'> Bought</small> 
+                        <small className='text-yellow-500'> PAID</small> 
                         ) : 
                         asset.status == 2 ? 
                         (
-                        <small className='text-gray-500'> Reverted</small>
+                        <small className='text-gray-500'> PROBE</small>
                         )  : 
                         asset.status == 3 ?
                          (
-                         <small className='text-teal-500'> Checked</small> 
+                         <small className='text-teal-500'> REVERTED</small> 
                          ) :
                          asset.status == 4 ?
                          (
-                         <small className='text-teal-500'> Sold</small> 
+                         <small className='text-teal-500'> SOLD</small> 
                           ) : ( 
-                         <small className='text-red-500'> Held</small> 
+                         <small className='text-red-500'> HELD</small> 
                         )}
                         
                     </div>
