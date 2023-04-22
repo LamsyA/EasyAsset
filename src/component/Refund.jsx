@@ -3,7 +3,7 @@ import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
 import { refunAsset } from '../services/Blockchain'
 
-const Refund = ({buyers}) => {
+const Refund = ({asset, buyers}) => {
     const [refundModal] = useGlobalState('refundModal')
 
     const handleRefund = async () => {
@@ -40,7 +40,7 @@ const Refund = ({buyers}) => {
             h-7/12 p-6 rounded-xl'>
                 <div className='flex flex-col'>
                     <div className='flex justify-between items-center'>
-                        <p className='font-semibold'>Title</p>
+                        <p className='font-semibold'>Asset: {asset?.title}</p>
                         <button type='button'
                             onClick={() => setGlobalState('refundModal', 'scale-0')}
                             className='border-0 bg-transparent 
@@ -51,14 +51,14 @@ const Refund = ({buyers}) => {
                     <div className='flex justify-center items-center mt-5'>
                         <div className='rounded-xl overflow-hidden h-40 w-40'>
                             <img
-                                src={imgSrc}
+                                src={asset?.credential || imgSrc}
                                 alt='Asset title'
                                 className='rounded-xl h-full object-cover w-full cursor-pointer '
                             />
                         </div>
                     </div>
                     <div className='flex flex-col justify-start rounded-xl mt-5'>
-                        <h4 className='font-sm text-xs text-gray-800'> Description</h4>
+                        <h4 className='font-sm text-xs text-gray-800'> {asset?.title}</h4>
                         <p className='flex justify-center text-red-500 text-sm my-1 '>Are you sure you want a refund?
                          </p>
                         <div className='flex justify-between items-center mt-3 text-gray-600'>
@@ -66,12 +66,12 @@ const Refund = ({buyers}) => {
                        <FaEthereum className='mr-3 h-5 w-5'  />
                        <div className='flex flex-col justify-center items-start'> 
                             <small className='text-xs'>@owner</small>
-                            <small className=' text-xs text-pink-800'>0X31..0f42</small>
+                            <small className=' text-xs text-pink-800'>{asset?.seller}</small>
                         </div>
                        </div>
                             <div className='flex flex-col text-gray-700'>
                                 <small className='text-sm'>Asset Price</small>
-                                <p className='text-xs font-medium text-red-700'>0.56 ETH</p>
+                                <p className='text-xs font-medium text-red-700'>{asset?.price} ETH</p>
                             </div>
                         </div>
                     </div>
