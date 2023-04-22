@@ -2,7 +2,6 @@
 
 pragma solidity ^0.8.0;
 
-import "@openzeppelin/contracts/utils/Counters.sol";
 import "@openzeppelin/contracts/token/ERC721/ERC721.sol";
 import "@openzeppelin/contracts/security/ReentrancyGuard.sol";
 
@@ -11,7 +10,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     /*
     struct that holds the Asset owner details
     */
-    uint256 assetCount;
+    uint256 assetCount ;
     // uint256 balanceFee;
 
     struct Asset {
@@ -44,7 +43,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         assetStatus
     );
 
-    // event sold(bool confirm, assetStatus status);
+    event sold(bool confirm, assetStatus status);
 
     event Action(
         address buyer,
@@ -56,14 +55,13 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     // Enum to track the status of an asset
     enum assetStatus {
         OPEN,
-        PENDING,
+        PAID,
         HELD,
         REFUNDED,
         SOLD
     }
 
-    // Array to store new buyer
-    buyer[] Newbuyer;
+    mapping(uint256 => buyer) refundedBuyers;
 
     mapping(uint256 => buyer) buyerMap;
     // uint256[] private TokenIdNumber;
@@ -80,9 +78,6 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     );
 
     // map all buyer into buyerof to store details all as a key-value pair
-    // mapping(uint256 => buyer[]) public buyerof;
-    // keep track of mintedCredential that exist
-    mapping(string => bool) private mintedCredential;
     // keep track of asset that exist
     mapping(string => bool) AssetExist;
     mapping(uint256 => bool) AssetIdExist;
@@ -105,6 +100,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // uint256 _royalityFee
         ERC721(_name, _symbol)
     {
+        assetCount = 0;
         owner = payable(msg.sender);
     }
 
@@ -117,31 +113,19 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         uint256 price
     ) public returns (bool) {
         // set all condition
-        require(bytes(title).length > 0, "Title must be greater than 0");
-        require(bytes(description).length > 0, "Description cannot be empty");
-        require(bytes(credential).length > 0, "Image cannot be empty");
-        require(price > 0 ether, "cost must be greater than 0");
+        require(bytes(title).length > 0 && bytes(description).length > 0, "Title must be greater than 0");
+        // require(bytes(description).length > 0, "Description cannot be empty");
+        require(bytes(credential).length > 0 && price > 0 ether, "Image cannot be empty");
+        // require(price > 0 ether, "cost must be greater than 0");
         require(!AssetExist[credential], "Asset already exist");
 
         //  initialize a counter;
-        uint assetCounter = assetCount++;
-        // assetCounter++;
-        // create a new Asset and set the details
-        Asset storage asset = Assets[assetCounter];
+       uint assetCounter = assetCount++;
+        // // create a new Asset and set the details
 
-        asset.seller = msg.sender;
-        asset.id = assetCounter;
-        asset.title = title;
-        asset.description = description;
-        asset.credential = credential;
-        asset.timestamp = block.timestamp;
-        asset.price = price;
+        Assets[assetCounter] = Asset( msg.sender, assetCounter,title,description,credential,block.timestamp, price, false,false,assetStatus.OPEN);
 
-        // assetOwner.push(msg.sender);
-
-        assetArray.push(asset);
-
-        // TokenIdNumber.push(assetCounter);
+        assetArray.push(Assets[assetCounter]);
 
         AssetExist[credential] = true;
 
@@ -158,6 +142,10 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
         return true;
     }
+    /*
+    * the buyAsset function create an instance of the new buyer 
+    *
+    */
 
     function buyAsset(uint256 id) public payable nonReentrant {
         require(
@@ -175,22 +163,8 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
         // create a new buyer and set the details
 
-        // buyer storage buy = buyerMap[id];
-        // buy.id = id;
-        // buy.owner = msg.sender;
-        // buy.amountpaid = msg.value;
-        // buy.timestamp = block.timestamp;
-        // // buy.refunded = false;
-        // // buy.buyingpoint = 1;
-        // buy.paid = true;
-        // // buy.status = assetStatus.PENDING;
-        // // buy.checked = false;
+        buyerMap[id] = buyer(id, msg.sender, msg.value, block.timestamp,true,false,'',assetStatus.PAID);
 
-        // // buyerof[id].push(buy);
-
-        buyerMap[id] = buyer(id, msg.sender, msg.value, block.timestamp,true,false,'',assetStatus.OPEN);
-
-        // Newbuyer.push(buy);
 
        assetArray[id].bought = true;
 
@@ -202,8 +176,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
             true
         );
 
-        assetArray[id].status = assetStatus.PENDING;
-        // buyerMap[id].status = assetStatus.OPEN;
+        assetArray[id].status = assetStatus.PAID;
         
     }
 
@@ -213,27 +186,21 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     }
 
     function refund(uint256 id) public {
-        // require(
-        //     assetArray[id].status == assetStatus.PENDING, "You have not buy the asset");
-            //  &&
-             require( msg.sender == buyerMap[id].owner, "you are not the buyer");
-                //  &&
-             require( buyerMap[id].status == assetStatus.OPEN,
-            "asset not opened for selling"
-        );
+        
+             require( msg.sender == buyerMap[id].owner &&  buyerMap[id].status == assetStatus.PAID, "You are not the buyer of this asset");
+        //      require( buyerMap[id].status == assetStatus.PAID,
+        //     "you have not paid for the asset"
+        // );
+        buyerMap[id].status = assetStatus.REFUNDED;
+         refundedBuyers[id]= buyerMap[id];
+
+        buyerMap[id] = buyer(0, address(0), 0, block.timestamp,false,false,'',assetStatus.OPEN);
+
             pay(buyerMap[id].owner, assetArray[id].price);
+            assetArray[id].bought = false;
             assetArray[id].status = assetStatus.OPEN;
-            buyerMap[id].status = assetStatus.REFUNDED;
-            // buyerMap[id].refunded = true;
-            emit refundAction( assetArray[id].status,buyerMap[id].status  );
+            emit refundAction( assetArray[id].status, buyerMap[id].status  );
         }
-
-    // receive() external payable {}
-
-    //check the balance of the contract.
-    // function balance() public view returns (uint256) {
-    //     return address(this).balance;
-    // }
 
     function Probe(uint256 id) public {
         require(
@@ -242,7 +209,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         );
         assetArray[id].probe = true;
 
-        if (assetArray[id].status == assetStatus.PENDING) {
+        if (assetArray[id].status == assetStatus.PAID) {
             pay(buyerMap[id].owner, assetArray[id].price);
         }
         assetArray[id].status = assetStatus.HELD;
@@ -258,38 +225,34 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     }
 
     function confirm(uint256 id) public {
-        //check if asset exist
-        // require(AssetIdExist[id], "Asset does not Exist");
-        //check the status of the asset
-        //the asset must be set to pending before approval
+        // check if asset exist
+        require(AssetIdExist[id], "Asset does not Exist");
+        //the asset must be set to PAID before approval
+
         require(
-            assetArray[id].status == assetStatus.PENDING,
+            assetArray[id].status == assetStatus.PAID ,
             "Asset is undergoing Negotiation"
         );
-
-        // require(msg.sender ==  assetArray[id].seller || msg.sender ==  buyerof[id][id].owner , "Only the buyer and the owner can call this function");
-        //only the initial buyer and the owner can call this function
+         //only the initial buyer and the owner can call this function
         require(
             msg.sender == buyerMap[id].owner && !buyerMap[id].checked,
             "Only the buyer can call this function"
         );
-        //this function can only be called once by the buyer of the asset and the asset owner;
-        // require(assetArray[id].checked == false   || buyerof[id][id].checked == false  , "You cannot buy your Asset");
-        // require(!buyerMap[id].checked, "You Have already Confirm the Assest");
 
         // change the checking status to true
         buyerMap[id].checked = true;
 
         // uint256 fund = assetArray[id].price;
         //  pay the asset owner
-        pay(assetArray[id].seller, assetArray[id].price);
-
+         pay(assetArray[id].seller, assetArray[id].price);
         assetArray[id].price -= buyerMap[id].amountpaid;
         assetArray[id].status = assetStatus.SOLD;
         // transfer ownership
         _transfer(assetArray[id].seller, msg.sender, assetArray[id].id);
         buyerMap[id].credential = assetArray[id].credential;
         assetArray[id].seller = msg.sender;
+        
+        
 
         emit assetTransfer(
             assetArray[id].seller,
@@ -298,18 +261,17 @@ contract EasyAsset is ERC721, ReentrancyGuard {
             buyerMap[id].credential,
             block.timestamp
         );
+         buyerMap[id].status = assetStatus.SOLD;
 
-        // emit sold(buyerMap[id].checked, assetArray[id].status);
+        emit sold(buyerMap[id].checked, assetArray[id].status);
     }
 
     function getAssets() public view returns (Asset[] memory) {
         return assetArray;
     }
-
-    // function getBuyers() public view returns (buyer[] memory) {
-    //     return Newbuyer;
-    // }
-
+  function getRefundedBuyers(uint _id) public view returns (buyer memory) {
+        return refundedBuyers[_id];
+    }
     function getBuyer(uint256 buyerId) public view returns (buyer memory) {
         return buyerMap[buyerId];
     }
