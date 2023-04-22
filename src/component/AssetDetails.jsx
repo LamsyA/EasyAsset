@@ -103,7 +103,7 @@ const AssetDetails = ({asset, buyers}) => {
                               ASSET UNDER NEGOTIATION
                           </button>
                             ) }
-                            {connectedAccount ==  buyers?.owner && asset?.status == 1 ? 
+                            { asset?.status != 0 ? 
                             (
                                 <div className="flex justify-start items-center my-5  space-x-6"> 
                                     <button className='inline-block bg-yellow-500 px-5 py-2 text-white

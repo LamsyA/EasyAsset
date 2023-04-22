@@ -3,7 +3,7 @@ import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
 import { confirmAsset } from '../services/Blockchain'
 
-const ConfirmButton = ({buyers}) => {
+const ConfirmButton = ({asset, buyers}) => {
     const [confirmModal] = useGlobalState('confirmModal')
 
 
@@ -42,7 +42,7 @@ const ConfirmButton = ({buyers}) => {
             h-7/12 p-6 rounded-xl'>
                 <div className='flex flex-col'>
                     <div className='flex justify-between items-center'>
-                        <p className='font-semibold'>Title</p>
+                        <p className='font-semibold'>{asset?.title}</p>
                         <button type='button'
                             onClick={() => setGlobalState('confirmModal', 'scale-0')}
                             className='border-0 bg-transparent 
@@ -53,7 +53,7 @@ const ConfirmButton = ({buyers}) => {
                     <div className='flex justify-center items-center mt-5'>
                         <div className='rounded-xl overflow-hidden h-40 w-40'>
                             <img
-                                src={imgSrc}
+                                src={asset?.credential || imgSrc}
                                 alt='Asset title'
                                 className='rounded-xl h-full object-cover w-full cursor-pointer '
                             />

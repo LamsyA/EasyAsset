@@ -175,20 +175,22 @@ contract EasyAsset is ERC721, ReentrancyGuard {
 
         // create a new buyer and set the details
 
-        buyer storage buy = buyerMap[id];
-        buy.id = id;
-        buy.owner = msg.sender;
-        buy.amountpaid = msg.value;
-        buy.timestamp = block.timestamp;
-        // buy.refunded = false;
-        // buy.buyingpoint = 1;
-        buy.paid = true;
-        // buy.status = assetStatus.PENDING;
-        // buy.checked = false;
+        // buyer storage buy = buyerMap[id];
+        // buy.id = id;
+        // buy.owner = msg.sender;
+        // buy.amountpaid = msg.value;
+        // buy.timestamp = block.timestamp;
+        // // buy.refunded = false;
+        // // buy.buyingpoint = 1;
+        // buy.paid = true;
+        // // buy.status = assetStatus.PENDING;
+        // // buy.checked = false;
 
-        // buyerof[id].push(buy);
+        // // buyerof[id].push(buy);
 
-        Newbuyer.push(buy);
+        buyerMap[id] = buyer(id, msg.sender, msg.value, block.timestamp,true,false,'',assetStatus.OPEN);
+
+        // Newbuyer.push(buy);
 
        assetArray[id].bought = true;
 
@@ -201,7 +203,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         );
 
         assetArray[id].status = assetStatus.PENDING;
-        Newbuyer[id].status = assetStatus.OPEN;
+        // buyerMap[id].status = assetStatus.OPEN;
         
     }
 
@@ -214,16 +216,16 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // require(
         //     assetArray[id].status == assetStatus.PENDING, "You have not buy the asset");
             //  &&
-             require( msg.sender == Newbuyer[id].owner, "you are not the buyer");
+             require( msg.sender == buyerMap[id].owner, "you are not the buyer");
                 //  &&
-             require( Newbuyer[id].status == assetStatus.OPEN,
+             require( buyerMap[id].status == assetStatus.OPEN,
             "asset not opened for selling"
         );
-            pay(Newbuyer[id].owner, assetArray[id].price);
+            pay(buyerMap[id].owner, assetArray[id].price);
             assetArray[id].status = assetStatus.OPEN;
-            Newbuyer[id].status = assetStatus.REFUNDED;
-            // Newbuyer[id].refunded = true;
-            emit refundAction( assetArray[id].status,Newbuyer[id].status  );
+            buyerMap[id].status = assetStatus.REFUNDED;
+            // buyerMap[id].refunded = true;
+            emit refundAction( assetArray[id].status,buyerMap[id].status  );
         }
 
     // receive() external payable {}
@@ -241,7 +243,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         assetArray[id].probe = true;
 
         if (assetArray[id].status == assetStatus.PENDING) {
-            pay(Newbuyer[id].owner, assetArray[id].price);
+            pay(buyerMap[id].owner, assetArray[id].price);
         }
         assetArray[id].status = assetStatus.HELD;
     }
@@ -268,45 +270,45 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // require(msg.sender ==  assetArray[id].seller || msg.sender ==  buyerof[id][id].owner , "Only the buyer and the owner can call this function");
         //only the initial buyer and the owner can call this function
         require(
-            msg.sender == Newbuyer[id].owner && !Newbuyer[id].checked,
+            msg.sender == buyerMap[id].owner && !buyerMap[id].checked,
             "Only the buyer can call this function"
         );
         //this function can only be called once by the buyer of the asset and the asset owner;
         // require(assetArray[id].checked == false   || buyerof[id][id].checked == false  , "You cannot buy your Asset");
-        // require(!Newbuyer[id].checked, "You Have already Confirm the Assest");
+        // require(!buyerMap[id].checked, "You Have already Confirm the Assest");
 
         // change the checking status to true
-        Newbuyer[id].checked = true;
+        buyerMap[id].checked = true;
 
         // uint256 fund = assetArray[id].price;
         //  pay the asset owner
         pay(assetArray[id].seller, assetArray[id].price);
 
-        assetArray[id].price -= Newbuyer[id].amountpaid;
+        assetArray[id].price -= buyerMap[id].amountpaid;
         assetArray[id].status = assetStatus.SOLD;
         // transfer ownership
         _transfer(assetArray[id].seller, msg.sender, assetArray[id].id);
-        Newbuyer[id].credential = assetArray[id].credential;
+        buyerMap[id].credential = assetArray[id].credential;
         assetArray[id].seller = msg.sender;
 
         emit assetTransfer(
             assetArray[id].seller,
-            Newbuyer[id].owner,
+            buyerMap[id].owner,
             assetArray[id].id,
-            Newbuyer[id].credential,
+            buyerMap[id].credential,
             block.timestamp
         );
 
-        // emit sold(Newbuyer[id].checked, assetArray[id].status);
+        // emit sold(buyerMap[id].checked, assetArray[id].status);
     }
 
     function getAssets() public view returns (Asset[] memory) {
         return assetArray;
     }
 
-    function getBuyers() public view returns (buyer[] memory) {
-        return Newbuyer;
-    }
+    // function getBuyers() public view returns (buyer[] memory) {
+    //     return Newbuyer;
+    // }
 
     function getBuyer(uint256 buyerId) public view returns (buyer memory) {
         return buyerMap[buyerId];
