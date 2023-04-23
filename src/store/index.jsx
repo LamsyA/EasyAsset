@@ -14,6 +14,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     asset: null,
     buyers : [],
     refund: [],
+    owner: '',
     
 })
 

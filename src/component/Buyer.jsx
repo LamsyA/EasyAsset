@@ -55,13 +55,13 @@ const Buyer = ({buyers,asset}) => {
                                     <span className='text-gray-700 font-medium'>{buyers?.amountpaid} ETH</span>
                                 </small>
                             </td>
-                            <td className='text-sm font-light px-6 
-                            py-4 whitespace-nowrap'>
+                            <td className='text-sm px-6 
+                            py-4 whitespace-nowrap font-bold'>
                                 {asset?.status == 0 ? (
                                 <small className='text-green-700'> OPEN</small>
                                 ) : 
                                 asset?.status == 1 ? (
-                                <small className='text-blue-500'> PAID</small> 
+                                <small className='text-blue-500 '> PAID</small> 
                                 ) : 
                                 asset?.status == 2 ? 
                                 (
