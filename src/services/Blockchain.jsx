@@ -179,7 +179,7 @@ const getOwner = async () => {
     const contract = await getContract() 
     const owner = await contract.owner() 
     console.log("refund ", owner.toLowerCase())
-    // setGlobalState('asset', asset)
+    setGlobalState('owner', owner.toLowerCase())
     // setGlobalState('refund', restructuredBuyers([refund])[0])
 return true
 } catch (error) {

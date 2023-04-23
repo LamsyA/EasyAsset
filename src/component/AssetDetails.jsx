@@ -6,6 +6,8 @@ const AssetDetails = ({asset, buyers}) => {
     // console.log("asset", asset)
 
   const [connectedAccount] =  useGlobalState('connectedAccount')
+  const [owner] =  useGlobalState('owner')
+
     return (
         <div className="py-28 px-6 flex justify-center">
             <div className='flex justify-center flex-col md:w-2/3'>
@@ -104,7 +106,7 @@ const AssetDetails = ({asset, buyers}) => {
                               ASSET UNDER NEGOTIATION
                           </button>
                             ) }
-                            { connectedAccount== buyers?.owner && asset?.status != 0 ? 
+                            { connectedAccount== buyers?.owner && asset?.status == 1 ? 
                             (
                                 <div className="flex justify-start items-center my-5  space-x-6"> 
                                     <button className='inline-block bg-yellow-500 px-5 py-2 text-white
@@ -123,7 +125,25 @@ const AssetDetails = ({asset, buyers}) => {
                             </button>
                                 </div>
                             ) : null }
-                            
+                            { connectedAccount== owner && asset?.status == 1 ? 
+                            (
+                                <div className="flex justify-start items-center my-5  space-x-6"> 
+                                    <button className='inline-block bg-yellow-500 px-5 py-2 text-white
+                                  font-medium text-xs leading-tight uppercase rounded-full 
+                                   shadow-md hover:bg-yellow-600 '
+                                                  onClick={() => setGlobalState('refundModal', 'scale-100')}>
+
+                                PROBE ASSET
+                            </button>
+                            <button className='inline-block bg-gray-500 px-5 py-2 text-white
+                                  font-medium text-xs leading-tight uppercase rounded-full 
+                                   shadow-md hover:bg-gray-600 '
+                                                  onClick={() => setGlobalState('confirmModal', 'scale-100')}
+                                                  >
+                                RELEASE ASSET
+                            </button>
+                                </div>
+                            ) : null }
                         </div>
                     </div>
                 </div>
