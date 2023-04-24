@@ -58,24 +58,24 @@ const Buyer = ({buyers,asset}) => {
                             <td className='text-sm px-6 
                             py-4 whitespace-nowrap font-bold'>
                                 {asset?.status == 0 ? (
-                                <small className='text-green-700'> OPEN</small>
+                                <small className='text-green-700'> OPEN </small>
                                 ) : 
                                 asset?.status == 1 ? (
-                                <small className='text-blue-500 '> PAID</small> 
+                                <small className='text-blue-500 '> PAID </small> 
                                 ) : 
                                 asset?.status == 2 ? 
                                 (
-                                <small className='text-gray-500'> PROBE</small>
+                                <small className='text-gray-500'> PROBE </small>
                                 )  : 
                                 asset?.status == 3 ?
                                 (
-                                <small className='text-teal-500'> REVERTED</small> 
+                                <small className='text-teal-500'> REVERTED </small> 
                                 ) :
                                 asset?.status == 4 ?
                                 (
-                                <small className='text-teal-500'> SOLD</small> 
+                                <small className='text-teal-500'> SOLD </small> 
                                 ) : ( 
-                                <small className='text-red-500'> HELD</small> 
+                                <small className='text-red-500'> HELD </small> 
                                 )}
                             </td>
                             <td className='text-sm font-light px-6 
