@@ -106,7 +106,6 @@ const isWalletConnected = async () => {
         const contract = await getContract() 
         const Probe = await contract.Probe(id) 
         console.log("probe ", Probe)
-       
     } catch (error) {
       reportError(error.message)
     }
