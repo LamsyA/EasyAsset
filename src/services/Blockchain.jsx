@@ -100,6 +100,17 @@ const isWalletConnected = async () => {
       reportError(error.message)
     }
   }
+  const ProbeAsset = async (id) => {
+    try {
+        if (!ethereum) return alert("Please install Metamask")
+        const contract = await getContract() 
+        const Probe = await contract.Probe(id) 
+        console.log("probe ", Probe)
+       
+    } catch (error) {
+      reportError(error.message)
+    }
+  }
 
   const listAssets = async () => {
     try {
@@ -261,5 +272,6 @@ export {
     refunAsset,
     confirmAsset,
     listRefund,
-     getOwner
+    getOwner,
+    ProbeAsset,
 }

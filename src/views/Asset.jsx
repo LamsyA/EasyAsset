@@ -6,7 +6,7 @@ import ConfirmButton from "../component/ConfirmButton"
 import Refund from "../component/Refund"
 import { useGlobalState } from "../store"
 import { useParams } from "react-router-dom"
-import { listAsset, listBuyers, listRefund } from "../services/Blockchain"
+import { ProbeAsset, listAsset, listBuyers, listRefund } from "../services/Blockchain"
 import RefundStatus from "../component/RefundStatus"
 
 
@@ -25,6 +25,7 @@ const Asset = () => {
           const result = await  listAsset(id)  
           await listBuyers(id)
           await listRefund(id)
+          
              
       };
        loadData();
