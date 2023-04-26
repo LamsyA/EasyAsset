@@ -131,7 +131,7 @@ const AssetDetails = ({asset, buyers}) => {
                                     <button className='inline-block bg-yellow-500 px-5 py-2 text-white
                                   font-medium text-xs leading-tight uppercase rounded-full 
                                    shadow-md hover:bg-yellow-600 '
-                                                  onClick={() => setGlobalState('refundModal', 'scale-100')}>
+                                                  onClick={() => setGlobalState('probeModal', 'scale-100')}>
 
                                 PROBE ASSET
                             </button>
