@@ -10,7 +10,7 @@ const ProbeButton = ({asset, buyers}) => {
         setGlobalState("probeModal", 'scale-0')
        
         try {
-            setMsgLoading("Wait while we refund you, in progress...");
+            setMsgLoading("Probing in progress...");
             const id = buyers?.id
             console.log("Buyers new", id)
           await ProbeAsset(id)
