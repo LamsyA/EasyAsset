@@ -3,7 +3,8 @@ import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
 import { ProbeAsset } from '../services/Blockchain'
 
-const ProbeButton = ({asset, buyers}) => {
+const ReleaseButton
+ = ({asset, buyers}) => {
     const [probeModal] = useGlobalState('probeModal')
 
     const handleProbe = async () => {
@@ -84,4 +85,4 @@ const ProbeButton = ({asset, buyers}) => {
     )
 }
 
-export default ProbeButton
+export default ReleaseButton
