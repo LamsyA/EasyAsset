@@ -5,10 +5,10 @@ import { ProbeAsset } from '../services/Blockchain'
 
 const ReleaseButton
  = ({asset, buyers}) => {
-    const [probeModal] = useGlobalState('probeModal')
+    const [releaseModal] = useGlobalState('releaseModal')
 
     const handleProbe = async () => {
-        setGlobalState("probeModal", 'scale-0')
+        setGlobalState("releaseModal", 'scale-0')
        
         try {
             setMsgLoading("Loading.....i");
@@ -33,7 +33,7 @@ const ReleaseButton
     return (
         <div className={`fixed top-0 left-0 w-screen h-screen flex
         items-center justify-center bg-black bg-opacity-50 transform 
-        transition-transform duration-300 ${probeModal}`}>
+        transition-transform duration-300 ${releaseModal}`}>
 
             <div className='bg-white shadow-xl shadow-black w-11/12 md:w-2/5
             h-7/12 p-6 rounded-xl'>
@@ -41,7 +41,7 @@ const ReleaseButton
                     <div className='flex justify-between items-center'>
                         <p className='font-semibold'>Asset: {asset?.title}</p>
                         <button type='button'
-                            onClick={() => setGlobalState('probeModal', 'scale-0')}
+                            onClick={() => setGlobalState('releaseModal', 'scale-0')}
                             className='border-0 bg-transparent 
                         focus:outline-none '>
                             <FaTimes />

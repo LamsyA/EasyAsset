@@ -7,6 +7,7 @@ const { setGlobalState, useGlobalState, getGlobalState } = createGlobalState({
     refundModal: 'scale-0',
     confirmModal: 'scale-0',
     probeModal: 'scale-0',
+    releaseModal: 'scale-0',
     loading: {show: false, msg: ''},
     alert: {show: false, msg: '', color: ''},
     connectedAccount: '',
