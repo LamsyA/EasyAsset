@@ -1,29 +1,29 @@
 import React from 'react'
 import {  FaEthereum, FaTimes } from 'react-icons/fa'
 import { useGlobalState, setGlobalState, setMsgLoading, setAlert } from '../store'
-import { ProbeAsset } from '../services/Blockchain'
+import {  ReleaseAsset } from '../services/Blockchain'
 
 const ReleaseButton
  = ({asset, buyers}) => {
     const [releaseModal] = useGlobalState('releaseModal')
 
-    const handleProbe = async () => {
+    const handleRelease = async () => {
         setGlobalState("releaseModal", 'scale-0')
        
         try {
-            setMsgLoading("Loading.....i");
+            setMsgLoading("Loading.....");
             const id = buyers?.id
             console.log("Buyers new", id)
-          await ProbeAsset(id)
+          await ReleaseAsset(id)
            .then((result) => {
             console.log("Success", result),
-            setAlert("Asset successfully Probe...")
+            setAlert("Asset successfully Released...")
            }).catch((error) => {
-            setAlert(`${error}`, 'red')
+            setAlert(`Ops! You can not Release Asset`, 'red')
            })
 
         } catch (error) {
-            setAlert('Ops! You can not probe asset', 'red')
+            setAlert('Ops! You can not Release Asset', 'red')
             console.log(error.message)
             
         }
@@ -58,7 +58,7 @@ const ReleaseButton
                     </div>
                     <div className='flex flex-col justify-start rounded-xl mt-5'>
                         <h4 className='font-sm text-xs text-gray-800'> {asset?.title}</h4>
-                        <p className='flex justify-center text-red-500 text-sm my-1 '>Only Admin Can Probe Asset
+                        <p className='flex justify-center text-red-500 text-sm my-1 '>Only Admin Can Release Asset
                          </p>
                         <div className='flex justify-between items-center mt-3 text-gray-600'>
                        <div className='flex justify-start items-center'>
@@ -77,7 +77,7 @@ const ReleaseButton
                     <button className=" flex justify-center items-center
                                 shadow-lg shadow-black text-white bg-yellow-500
                                 hover:bg-red-500 rounded-full mt-5 p-2 uppercase "
-                                onClick={handleProbe}> Probe Asset
+                                onClick={handleRelease}> Probe Asset
                     </button>
                 </div>
             </div>
