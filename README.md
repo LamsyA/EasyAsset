@@ -2,7 +2,7 @@
 Easy Asset is a ERC 721 NFT
 
 Easy Asset is a Decentralised Application where you can mint your asset as NFT and display it for sale on 
-the App. ALl Minted asset are done on-chain.
+the App. All Minted asset are done on-chain.
 
 Anybody can buy asset on the App and transfer of ownership will be done once payment has been confirm.
 
