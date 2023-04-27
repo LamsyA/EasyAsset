@@ -9,6 +9,7 @@ import { useParams } from "react-router-dom"
 import { ProbeAsset, listAsset, listBuyers, listRefund } from "../services/Blockchain"
 import RefundStatus from "../component/RefundStatus"
 import ProbeButton from "../component/ProbeButton"
+import ReleaseButton from "../component/ReleaseButton"
 
 
 const Asset = () => {
@@ -43,6 +44,7 @@ const Asset = () => {
             <ConfirmButton asset={asset} buyers={buyers} />
             <RefundStatus buyers={buyers} refund={refund}  />
             <ProbeButton asset={asset} buyers={buyers} />
+            <ReleaseButton asset={asset} buyers={buyers} />
 
         </>
     )

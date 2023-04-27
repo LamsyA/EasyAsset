@@ -125,7 +125,7 @@ const AssetDetails = ({asset, buyers}) => {
                             </button>
                                 </div>
                             ) : null }
-                            { connectedAccount== owner || asset?.status == 3 ? 
+                            { connectedAccount== owner && ( asset?.status == 0 || asset?.status == 1 ||  asset?.status == 2 ) ? 
                             (
                                 <div className="flex justify-start items-center my-5  space-x-6"> 
                                     <button className='inline-block bg-yellow-500 px-5 py-2 text-white
@@ -138,7 +138,7 @@ const AssetDetails = ({asset, buyers}) => {
                             <button className='inline-block bg-gray-500 px-5 py-2 text-white
                                   font-medium text-xs leading-tight uppercase rounded-full 
                                    shadow-md hover:bg-gray-600 '
-                                                  onClick={() => setGlobalState('confirmModal', 'scale-100')}
+                                                  onClick={() => setGlobalState('releaseModal', 'scale-100')}
                                                   >
                                 RELEASE ASSET
                             </button>
