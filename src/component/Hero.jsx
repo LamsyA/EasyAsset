@@ -46,7 +46,7 @@ const Hero = () => {
                 <div className='flex flex-col justify-center items-center bg-teal-50 
                 h-20 border border-white shadow-md  w-full'>
                     <span className='text-yellow-500 font-bold text-lg leading-5'> {0} </span>
-                    <span>Assets </span>
+                    <span>Buyers </span>
                 </div>
 
             </div>

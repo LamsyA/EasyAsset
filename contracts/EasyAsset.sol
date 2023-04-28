@@ -11,6 +11,8 @@ contract EasyAsset is ERC721, ReentrancyGuard {
     struct that holds the Asset owner details
     */
     uint256 assetCount ;
+    uint256  NumAsset;
+    uint256 AssetBought;
     // uint256 balanceFee;
 
     struct Asset {
@@ -139,7 +141,7 @@ contract EasyAsset is ERC721, ReentrancyGuard {
             price
         );
         _safeMint(msg.sender, assetCounter);
-
+        NumAsset++;
         return true;
     }
     /*
@@ -245,13 +247,12 @@ contract EasyAsset is ERC721, ReentrancyGuard {
         // uint256 fund = assetArray[id].price;
         //  pay the asset owner
          pay(assetArray[id].seller, assetArray[id].price);
-        assetArray[id].price -= buyerMap[id].amountpaid;
         assetArray[id].status = assetStatus.SOLD;
         // transfer ownership
         _transfer(assetArray[id].seller, msg.sender, assetArray[id].id);
         buyerMap[id].credential = assetArray[id].credential;
         assetArray[id].seller = msg.sender;
-        
+        AssetBought++;
         
 
         emit assetTransfer(

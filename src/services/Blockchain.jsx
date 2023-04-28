@@ -94,7 +94,7 @@ const isWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask")
         const contract = await getContract() 
         const confirm = await contract.confirm(id) 
-        console.log("confirmation ", confirm)
+        // console.log("confirmation ", confirm)
        
     } catch (error) {
       reportError(error.message)
@@ -105,7 +105,7 @@ const isWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask")
         const contract = await getContract() 
         const Probe = await contract.Probe(id) 
-        console.log("probe ", Probe)
+        // console.log("probe ", Probe)
     } catch (error) {
       reportError(error.message)
     }
@@ -116,7 +116,7 @@ const isWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask")
         const contract = await getContract() 
         const Probe = await contract.releaseAsset(id) 
-        console.log("probe ", Probe)
+        // console.log("probe ", Probe)
     } catch (error) {
       reportError(error.message)
     }
@@ -129,7 +129,7 @@ const isWalletConnected = async () => {
         const contract = await getContract() 
         const assets = await contract.getAssets() 
         setGlobalState('assets', restructuredAssets(assets))
-        console.log( restructuredAssets(assets))
+        // console.log( restructuredAssets(assets))
     } catch (error) {
       reportError(error)
     }
@@ -153,7 +153,7 @@ const isWalletConnected = async () => {
         const contract = await getContract()
         const buyers = await contract.getBuyer(id)
         setGlobalState('buyers', restructuredBuyers([buyers])[0])
-        console.log("list of Buyers:", restructuredBuyers([buyers])[0])
+        // console.log("list of Buyers:", restructuredBuyers([buyers])[0])
       return true
     } catch (error) {
       reportError(error)
@@ -165,7 +165,7 @@ const isWalletConnected = async () => {
         if (!ethereum) return alert("Please install Metamask")
         const contract = await getContract() 
         const refund = await contract.getRefundedBuyers(id) 
-        console.log("refund ", restructuredBuyers([refund])[0])
+        // console.log("refund ", restructuredBuyers([refund])[0])
         // setGlobalState('asset', asset)
         setGlobalState('refund', restructuredBuyers([refund])[0])
         // console.log("asset", asset)
@@ -175,17 +175,17 @@ const isWalletConnected = async () => {
   }
 
   const refunAsset = async ({id,price}) => {
-    console.log("id " , id , price)
+    // console.log("id " , id , price)
 
     try {
     if (!ethereum) return alert("Please install Metamask")
     const connectedAccount = getGlobalState("connectedAccount")
     price = ethers.utils.parseEther(price.toString())
     const contract = await getContract()
-    console.log("Price ", price)
+    // console.log("Price ", price)
     const transaction = await contract.refund(id)
     
-    console.log("Created Asset:", transaction)
+    // console.log("Created Asset:", transaction)
   return true
 } catch (error) {
   reportError(error.message)
@@ -193,15 +193,30 @@ const isWalletConnected = async () => {
 }
 
 const getOwner = async () => {
-  // console.log("id " , id , price)
 
   try {
     if (!ethereum) return alert("Please install Metamask")
     const contract = await getContract() 
     const owner = await contract.owner() 
-    console.log("refund ", owner.toLowerCase())
     setGlobalState('owner', owner.toLowerCase())
-    // setGlobalState('refund', restructuredBuyers([refund])[0])
+return true
+} catch (error) {
+reportError(error.message)
+}
+}
+
+const getNumAsset = async () => {
+
+  try {
+    if (!ethereum) return alert("Please install Metamask")
+    const contract = await getContract() 
+    const NumberOfAsset = await contract.NumAsset() 
+    console.log("NumberOfAsset: ", NumberOfAsset)
+    const NumberOFBuyer = await contract.AssetBought() 
+    // console.log("refund ", owner.toLowerCase())
+    setGlobalState('owner', owner.toLowerCase())
+    setGlobalState('NumberOfAsset', NumberOfAsset.toNumber())
+    setGlobalState('NumberOFBuyer', NumberOFBuyer.toNumber())
 return true
 } catch (error) {
 reportError(error.message)
@@ -285,4 +300,5 @@ export {
     getOwner,
     ProbeAsset,
     ReleaseAsset,
+    getNumAsset,
 }
